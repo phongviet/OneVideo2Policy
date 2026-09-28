@@ -59,9 +59,10 @@ Machine-readable results are under [`docs/experiments`](docs/experiments).
 
 <img src="docs/assets/project-overview.png" width="100%" alt="Measured five-stage pipeline using actual project outputs: HOI4D RGB-D input, SAM2 and CoTracker perception, a Gaussian metric scene, registered robot synthesis, and closed-loop policy evaluation">
 
-The figure shows actual artifacts from the repository. The recovered ball-to-bowl skill
-is transferred into a measured Panda simulation, varied across pose, camera, lighting,
-and Gaussian background, then used to train and test the same compact waypoint policy.
+**Pipeline.** One RGB-D demonstration is segmented and tracked, converted into a
+metric Gaussian scene and object-relative skill, transferred to a Panda, and randomized
+across pose, camera, lighting, and background. The resulting 4,000 dual-view frames train
+a compact waypoint model evaluated with paired shifts and five training seeds.
 
 ## Real generated outputs
 
