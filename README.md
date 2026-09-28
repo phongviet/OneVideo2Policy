@@ -71,7 +71,9 @@ optional extension that requires external hardware, calibration, and safety vali
 
 The repository includes a runnable local end-to-end systems baseline and a local
 model-assisted run contract. The hardware-free project scope is complete. The reported
-policy result is 97/100 held-out simulated rollouts; physical robot success and
+selected-checkpoint result is 97/100 held-out simulated rollouts. A subsequent
+five-seed combined-shift replication obtains 76.0% mean success (5.8 percentage
+point standard deviation), below the frozen 80% gate. Physical robot success and
 sim-to-real transfer were not evaluated and are outside the project scope.
 
 | Component | Status | Evidence / next deliverable |
@@ -91,7 +93,8 @@ sim-to-real transfer were not evaluated and are outside the project scope.
 | RGB-D Gaussian scene | ✅ | 7,007 fused Gaussians; tuned held-out views plus a 353-sample metric registered dual-camera robot demo |
 | Task-specific simulator | ✅ | Measured 3.83 cm ball and 9.91 cm bowl; oracle controller passes 3/3 randomized rollouts |
 | Synthetic demonstrations | ✅ | 10/10 measured ball-to-bowl trajectories plus 500 randomized localization frames |
-| Policy benchmark | ✅ | Final 4,000-frame waypoint model passes 97/100 across five clean and shifted conditions |
+| Policy benchmark | ✅ | Selected checkpoint: 97/100 across five conditions; five-seed combined shift: 76.0±5.8%, exposing checkpoint variance |
+| CVPR-style report | ✅ | Five-page report, paired coverage ablation, camera severity curve, and 250-rollout multi-seed replication |
 | Physical deployment preflight | ✅ | Calibration validator, safety supervisor, frozen-checkpoint smoke test, artifact hashes, and paired result gate |
 | Matched physical fixtures | ✅ | Watertight 38.321 mm ball and 99.123 × 56.933 mm bowl STL files with audited dimensions |
 | Camera calibration capture | ✅ | Print-ready ChArUco board plus automatic intrinsic, distortion, and robot-frame correspondence extraction |

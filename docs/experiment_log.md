@@ -260,6 +260,21 @@
   far outside their training appearance and the one-demo row has one chance success.
 - Artifacts: `results/evaluation/ablation_*_combined20/` (Git-ignored).
 
+## Report replication and severity experiments
+
+- Date: 2026-09-28.
+- Five independent 4,000-frame waypoint models, seeds 42--46, evaluated on the same
+  50 combined-shift resets: 82%, 68%, 78%, 72%, and 80% success. Mean 76.0%, sample
+  standard deviation 5.8 percentage points; the frozen 80% seed-stability gate is not
+  established.
+- Paired coverage ladder on 50 combined-shift resets: one demonstration 6%, 500 clean
+  frames 2%, 2,000 appearance/pose frames 20%, 3,000 frames adding camera variation
+  50%, 4,000 frames adding combined low-light examples 82%, oracle geometry 100%.
+- Camera translation severity for the seed-42 model: 98%, 94%, 76%, 60%, and 50% at
+  0, 1, 2, 3, and 4 cm, respectively.
+- The report, aggregate JSON, plots, and reproducible runner are under `reports/cvpr/`
+  and `scripts/run_report_experiments.py`.
+
 ## Asymmetric-object correspondence ablation
 
 - Date / commit: 2026-09-25 / pending

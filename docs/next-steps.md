@@ -30,15 +30,19 @@ That policy augmentation remains appearance-only. A separate semantic-anchor pat
 registers robosuite to HOI4D metric cameras and produces a 353-sample dual-camera
 demonstration with Gaussian/simulator depth ordering.
 
-The final 4,000-frame robustness model also includes rendered ±2 cm camera jitter
+The selected 4,000-frame robustness checkpoint includes rendered ±2 cm camera jitter
 and half-light data. It passes 97/100 total rollouts: 20/20 nominal, 19/20 camera,
-20/20 lighting, 20/20 Gaussian appearance, and 18/20 combined.
+20/20 lighting, 20/20 Gaussian appearance, and 18/20 combined. A five-seed paired
+replication averages 76.0±5.8% on the combined shift, so the selected checkpoint does
+not establish seed-stable robustness.
 
 ## Completion status
 
 No work remains in the declared hardware-free project scope. All local data processing,
 model comparisons, reconstruction and motion gates, Gaussian composition, simulation,
 policy training, robustness evaluation, and deployment-software checks are complete.
+The evaluation now records the failed seed-stability gate rather than treating the
+selected checkpoint as a general robustness result.
 
 Physical calibration and robot trials are excluded because no real devices are
 available. They remain a future extension and are not a condition of project completion.

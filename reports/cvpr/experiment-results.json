@@ -1,0 +1,254 @@
+{
+  "protocol": {
+    "episodes_per_evaluation": 50,
+    "paired_evaluation_seed": 260928,
+    "training_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "frozen_training_data": "results/simulation/ball_localization_robust_4000/demonstrations.npz",
+    "gaussian_background": "results/gaussian_scene/hoi4d_ball_to_bowl_animated/object-trajectory.mp4",
+    "reports": {
+      "multiseed": {
+        "42": "results/report_experiments/evaluation/multiseed_seed_42_combined_50/report.json",
+        "43": "results/report_experiments/evaluation/multiseed_seed_43_combined_50/report.json",
+        "44": "results/report_experiments/evaluation/multiseed_seed_44_combined_50/report.json",
+        "45": "results/report_experiments/evaluation/multiseed_seed_45_combined_50/report.json",
+        "46": "results/report_experiments/evaluation/multiseed_seed_46_combined_50/report.json"
+      },
+      "coverage": {
+        "one_demo": "results/report_experiments/evaluation/coverage_one_demo_combined_50/report.json",
+        "clean_500": "results/report_experiments/evaluation/coverage_clean_500_combined_50/report.json",
+        "appearance_pose_2000": "results/report_experiments/evaluation/coverage_appearance_pose_2000_combined_50/report.json",
+        "plus_camera_3000": "results/report_experiments/evaluation/coverage_plus_camera_3000_combined_50/report.json",
+        "plus_combined_4000": "results/report_experiments/evaluation/coverage_plus_combined_4000_combined_50/report.json",
+        "oracle": "results/report_experiments/evaluation/coverage_oracle_combined_50/report.json"
+      },
+      "severity": {
+        "0": "results/report_experiments/evaluation/camera_0cm_50/report.json",
+        "1": "results/report_experiments/evaluation/camera_1cm_50/report.json",
+        "2": "results/report_experiments/evaluation/camera_2cm_50/report.json",
+        "3": "results/report_experiments/evaluation/camera_3cm_50/report.json",
+        "4": "results/report_experiments/evaluation/camera_4cm_50/report.json"
+      }
+    }
+  },
+  "multiseed": {
+    "42": {
+      "successes": 41,
+      "episodes": 50,
+      "success_rate": 0.82,
+      "wilson_95": [
+        0.6920394632569922,
+        0.9022980732976582
+      ],
+      "median_initial_xy_error_m": 0.0055705756478253736
+    },
+    "43": {
+      "successes": 34,
+      "episodes": 50,
+      "success_rate": 0.68,
+      "wilson_95": [
+        0.5418970269185592,
+        0.7924178373934316
+      ],
+      "median_initial_xy_error_m": 0.005949888976780383
+    },
+    "44": {
+      "successes": 39,
+      "episodes": 50,
+      "success_rate": 0.78,
+      "wilson_95": [
+        0.6475845041874634,
+        0.8724608402978559
+      ],
+      "median_initial_xy_error_m": 0.005670959198700533
+    },
+    "45": {
+      "successes": 36,
+      "episodes": 50,
+      "success_rate": 0.72,
+      "wilson_95": [
+        0.5833487630404344,
+        0.8252582933408878
+      ],
+      "median_initial_xy_error_m": 0.00567928050171448
+    },
+    "46": {
+      "successes": 40,
+      "episodes": 50,
+      "success_rate": 0.8,
+      "wilson_95": [
+        0.6696289406777459,
+        0.887562499842239
+      ],
+      "median_initial_xy_error_m": 0.004944238268483961
+    }
+  },
+  "coverage": {
+    "one_demo": {
+      "successes": 3,
+      "episodes": 50,
+      "success_rate": 0.06,
+      "wilson_95": [
+        0.02061497034897397,
+        0.16217091688838173
+      ],
+      "median_initial_xy_error_m": 0.049566601042882824
+    },
+    "clean_500": {
+      "successes": 1,
+      "episodes": 50,
+      "success_rate": 0.02,
+      "wilson_95": [
+        0.003539259271646236,
+        0.10495443589637815
+      ],
+      "median_initial_xy_error_m": 0.08700446493919747
+    },
+    "appearance_pose_2000": {
+      "successes": 10,
+      "episodes": 50,
+      "success_rate": 0.2,
+      "wilson_95": [
+        0.1124375001577611,
+        0.3303710593222542
+      ],
+      "median_initial_xy_error_m": 0.01839398850707942
+    },
+    "plus_camera_3000": {
+      "successes": 25,
+      "episodes": 50,
+      "success_rate": 0.5,
+      "wilson_95": [
+        0.3664451431682858,
+        0.6335548568317142
+      ],
+      "median_initial_xy_error_m": 0.011451299787565497
+    },
+    "plus_combined_4000": {
+      "successes": 41,
+      "episodes": 50,
+      "success_rate": 0.82,
+      "wilson_95": [
+        0.6920394632569922,
+        0.9022980732976582
+      ],
+      "median_initial_xy_error_m": 0.0055705756478253736
+    },
+    "oracle": {
+      "successes": 50,
+      "episodes": 50,
+      "success_rate": 1.0,
+      "wilson_95": [
+        0.9286524008666414,
+        1.0
+      ],
+      "median_initial_xy_error_m": 0.0
+    }
+  },
+  "severity": {
+    "0": {
+      "successes": 49,
+      "episodes": 50,
+      "success_rate": 0.98,
+      "wilson_95": [
+        0.8950455641036219,
+        0.9964607407283539
+      ],
+      "median_initial_xy_error_m": 0.0024157125059850624
+    },
+    "1": {
+      "successes": 47,
+      "episodes": 50,
+      "success_rate": 0.94,
+      "wilson_95": [
+        0.8378290831116182,
+        0.979385029651026
+      ],
+      "median_initial_xy_error_m": 0.003021879180683493
+    },
+    "2": {
+      "successes": 38,
+      "episodes": 50,
+      "success_rate": 0.76,
+      "wilson_95": [
+        0.6258731624205708,
+        0.8570260860300828
+      ],
+      "median_initial_xy_error_m": 0.004506582536461243
+    },
+    "3": {
+      "successes": 30,
+      "episodes": 50,
+      "success_rate": 0.6,
+      "wilson_95": [
+        0.4618143774758936,
+        0.7239161026974346
+      ],
+      "median_initial_xy_error_m": 0.008407914867838246
+    },
+    "4": {
+      "successes": 25,
+      "episodes": 50,
+      "success_rate": 0.5,
+      "wilson_95": [
+        0.3664451431682858,
+        0.6335548568317142
+      ],
+      "median_initial_xy_error_m": 0.013463015270501732
+    }
+  },
+  "multiseed_summary": {
+    "mean_seed_success_rate": 0.76,
+    "std_seed_success_rate": 0.05830951894845299,
+    "t95_seed_mean": [
+      0.6875991723123486,
+      0.8324008276876514
+    ],
+    "min_seed_success_rate": 0.68,
+    "max_seed_success_rate": 0.82,
+    "pooled_successes": 190,
+    "pooled_episodes": 250,
+    "pooled_wilson_95": [
+      0.7033795246798652,
+      0.8087511595825035
+    ],
+    "mean_seed_median_xy_error_m": 0.005562988518700946
+  },
+  "coverage_paired_tests": {
+    "one_demo": {
+      "first_only": 0,
+      "second_only": 38,
+      "discordant": 38,
+      "two_sided_exact_p": 7.275957614183426e-12
+    },
+    "clean_500": {
+      "first_only": 0,
+      "second_only": 40,
+      "discordant": 40,
+      "two_sided_exact_p": 1.8189894035458565e-12
+    },
+    "appearance_pose_2000": {
+      "first_only": 1,
+      "second_only": 32,
+      "discordant": 33,
+      "two_sided_exact_p": 7.916241884231567e-09
+    },
+    "plus_camera_3000": {
+      "first_only": 0,
+      "second_only": 16,
+      "discordant": 16,
+      "two_sided_exact_p": 3.0517578125e-05
+    },
+    "oracle": {
+      "first_only": 9,
+      "second_only": 0,
+      "discordant": 9,
+      "two_sided_exact_p": 0.00390625
+    }
+  }
+}

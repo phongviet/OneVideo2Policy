@@ -22,8 +22,10 @@ Completed evidence:
     rollouts with 4.9 mm median initial XY error.
 11. Gaussian appearance composition produces synchronized robot demonstrations; the
     mixed model passes 5/5 paired clean and 5/5 composited rollouts.
-12. The final robustness model passes 97/100 across nominal, camera, lighting,
-    Gaussian-background, and combined 20-episode conditions.
+12. The selected robustness checkpoint passes 97/100 across nominal, camera,
+    lighting, Gaussian-background, and combined 20-episode conditions. A later
+    five-seed replication obtains 76.0±5.8% mean combined-shift success, showing
+    that the original checkpoint does not establish seed-stable robustness.
 13. Semantic metric anchors register robosuite into HOI4D with a 2.7 mm table-plane
     residual and produce a 353-sample depth-ordered dual-camera Gaussian demo.
 14. The physical deployment preflight validates calibration, freezes artifact hashes,
@@ -64,12 +66,15 @@ object-pose accuracy remains outside this 2D test.
 The measured HOI4D ball-and-bowl geometry is retargeted into robosuite. Successful
 oracle and learned-policy rollouts verify grasp, transfer, release, and placement.
 
-### Gate D — policy evidence (passed locally)
+### Gate D — policy evidence (evaluated locally; seed-stable gate not passed)
 
 The selected waypoint policy passes 97/100 total held-out simulated rollouts across
 object pose, ±2 cm camera translation, half lighting, Gaussian background, and their
-combination. The combined condition passes 18/20. This completes the hardware-free
-project scope.
+combination. The combined condition passes 18/20. Five independently trained models
+subsequently average 76.0±5.8% over 50 paired combined-shift episodes each (range
+68–82%), below the frozen 80% gate. The result supports the value of matched training
+coverage while rejecting a seed-stable robustness claim. This completes the planned
+hardware-free evaluation scope.
 
 ### Optional Gate E — physical validation (out of scope)
 
@@ -91,6 +96,6 @@ violations. Follow [`physical-evaluation-runbook.md`](physical-evaluation-runboo
 ## Completion status
 
 Gates A through D are complete. Gate E is outside the declared hardware-free scope.
-The learned policy is validated in simulation, including controlled camera, lighting,
-Gaussian-background, and combined shifts. No physical-policy or sim-to-real claim is
-made.
+The learned policy is evaluated in simulation under controlled camera, lighting,
+Gaussian-background, and combined shifts. Its selected checkpoint is strong, but the
+combined-shift result is seed-sensitive. No physical-policy or sim-to-real claim is made.
