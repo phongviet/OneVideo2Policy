@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "experiment": "SAM2.1 Hiera Small cross-action propagation on HOI4D",
+  "protocol": {
+    "model": "facebook/sam2.1-hiera-small",
+    "input": "5 Hz, maximum width 640 px",
+    "prompt": "one positive point at the maximum distance-transform location of the official first-frame mask",
+    "evaluation": "IoU against official masks on every sampled frame, including the prompted frame"
+  },
+  "sequences": [
+    {
+      "name": "Mug",
+      "sequence_id": "ZY20210800004_H4_C2_N40_S10_s05_T1",
+      "motion_label": 1,
+      "frames": 100,
+      "sample_fps": 5.0,
+      "first_frame_prompt_xy": [
+        353,
+        214
+      ],
+      "mean_iou": 0.9456,
+      "median_iou": 0.9454,
+      "p10_iou": 0.935,
+      "frames_iou_at_least_0_5": 1.0
+    },
+    {
+      "name": "Kettle",
+      "sequence_id": "ZY20210800004_H4_C12_N44_S184_s05_T2",
+      "motion_label": 1,
+      "frames": 100,
+      "sample_fps": 5.0,
+      "first_frame_prompt_xy": [
+        282,
+        222
+      ],
+      "mean_iou": 0.9708,
+      "median_iou": 0.9721,
+      "p10_iou": 0.9605,
+      "frames_iou_at_least_0_5": 1.0
+    },
+    {
+      "name": "Trash-can lid",
+      "sequence_id": "ZY20210800004_H4_C14_N28_S211_s02_T2",
+      "motion_label": 3,
+      "frames": 100,
+      "sample_fps": 5.0,
+      "first_frame_prompt_xy": [
+        214,
+        241
+      ],
+      "mean_iou": 0.2154,
+      "median_iou": 0.2197,
+      "p10_iou": 0.1864,
+      "frames_iou_at_least_0_5": 0.0
+    },
+    {
+      "name": "Storage door",
+      "sequence_id": "ZY20210800004_H4_C4_N41_S217_s03_T3",
+      "motion_label": 1,
+      "frames": 100,
+      "sample_fps": 5.0,
+      "first_frame_prompt_xy": [
+        236,
+        323
+      ],
+      "mean_iou": 0.2529,
+      "median_iou": 0.2561,
+      "p10_iou": 0.1621,
+      "frames_iou_at_least_0_5": 0.0
+    }
+  ],
+  "macro_mean_iou": 0.5962
+}

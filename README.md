@@ -26,9 +26,10 @@ trajectories requires hardware and operator time.
 consistent robot training data, on a small local machine, and improve closed-loop
 robustness under controlled shifts?
 
-This study uses one **HOI4D RGB-D ball-to-bowl sequence**. Depth provides metric scale;
-RGB drives segmentation, tracking, Gaussian appearance, and policy observations. The
-final claim is limited to hardware-free robosuite evaluation.
+The policy study uses one **HOI4D RGB-D ball-to-bowl sequence**. A separate 61-sequence
+audit tests whether the input and skill representation extend to mug, kettle, trash-can,
+and storage-furniture actions. The final policy claim remains limited to hardware-free
+robosuite evaluation.
 
 ## Contributions
 
@@ -51,6 +52,7 @@ final claim is limited to hardware-free robosuite evaluation.
 | Policy training | **4,000 frames**, **55.4 s** |
 | Selected checkpoint | **97/100** across five conditions |
 | Five-seed combined shift | **76.0 ± 5.8%**, 190/250 pooled |
+| Cross-action input audit | **5 tasks**, 1,500 pose + 1,500 mask frames |
 | Repository checks | **73 tests**, Ruff clean |
 
 Machine-readable results are under [`docs/experiments`](docs/experiments).
@@ -143,6 +145,19 @@ the largest measured weakness of the compact visual policy.
 | TripoSR-128 | 81.9 × 69.7 × 14.5 mm | **1.87 GB** | Yes | 58.9% |
 | Stable Fast 3D | 81.9 × 68.3 × 23.7 mm | **6.17 GB** | No | 33.1% |
 
+### 5. Other HOI4D actions expose the rigid-skill boundary
+
+<img src="docs/assets/hoi4d-cross-action-results.png" width="100%" alt="HOI4D cross-action audit with five real sequence frames, action coverage, object visibility, and representation requirements">
+
+Across 61 local sequences, all have 300 object-pose records and 300 motion masks. The
+five-sequence audit covers rigid pick/place, pouring, and articulated open/close motion.
+SAM2.1 Small reaches **0.946 mug IoU** and **0.971 kettle IoU**, but a one-point prompt
+fails on the trash-can lid and storage door. Part-aware negatives recover the storage
+door to **0.802 IoU** and leave the trash-can lid unresolved at 0.212. Both articulated
+tasks also require part or joint state. This is an input and perception audit, not
+cross-action policy success. See the [protocol and analysis](docs/hoi4d-cross-action-study.md)
+and [machine-readable results](docs/experiments/hoi4d-cross-action-results.json).
+
 ## Reproduce locally
 
 ### Lightweight package and checks
@@ -211,6 +226,8 @@ More detail: [two-path execution](docs/two-path-execution.md),
 ## Scope and limitations
 
 - The evidence covers one rigid ball-to-bowl **Place** task in simulation.
+- Other HOI4D action classes have been audited for annotation and representation
+  feasibility, but have not yet been trained and evaluated as closed-loop policies.
 - The selected metric path uses one RGB-D sequence, so the final system is not a
   strictly monocular reconstruction pipeline.
 - Gaussian splats provide appearance; fitted metric primitives provide collision

@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "experiment": "Articulated-part prompt ablation for SAM2.1 Hiera Small",
+  "protocol": "one interior positive point plus four negatives just outside the official first-frame part bounding box; later frames remain unseen",
+  "results": [
+    {
+      "name": "Trash-can lid",
+      "baseline_one_point_mean_iou": 0.2154,
+      "part_aware_five_point_mean_iou": 0.2123,
+      "part_aware_median_iou": 0.2181,
+      "part_aware_p10_iou": 0.1828,
+      "part_aware_frames_iou_at_least_0_5": 0.0,
+      "prompt_points_xy": [
+        [
+          214,
+          241
+        ],
+        [
+          184,
+          241
+        ],
+        [
+          269,
+          241
+        ],
+        [
+          226,
+          212
+        ],
+        [
+          226,
+          270
+        ]
+      ],
+      "prompt_labels": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Storage door",
+      "baseline_one_point_mean_iou": 0.2529,
+      "part_aware_five_point_mean_iou": 0.8018,
+      "part_aware_median_iou": 0.8751,
+      "part_aware_p10_iou": 0.6807,
+      "part_aware_frames_iou_at_least_0_5": 0.91,
+      "prompt_points_xy": [
+        [
+          236,
+          323
+        ],
+        [
+          199,
+          290
+        ],
+        [
+          282,
+          290
+        ],
+        [
+          240,
+          211
+        ],
+        [
+          240,
+          359
+        ]
+      ],
+      "prompt_labels": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}
