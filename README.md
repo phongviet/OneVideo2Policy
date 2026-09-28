@@ -2,214 +2,176 @@
 
 # OneVideo2Policy
 
-### From one human video to robust robot manipulation data
-
-**A focused reproduction study of geometry-consistent synthetic demonstrations for imitation learning.**
+### One recorded manipulation sequence → metric scene → synthetic robot data → closed-loop policy
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Code style: Ruff](https://img.shields.io/badge/code%20style-Ruff-D7FF64?logo=ruff&logoColor=black)](https://docs.astral.sh/ruff/)
-[![Tests](https://img.shields.io/badge/tests-73%20passing-2EA44F)](#testing)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-local%20scope%20complete-2EA44F)](#project-status)
+[![Tests](https://img.shields.io/badge/tests-73%20passing-2EA44F)](#reproduce-locally)
+[![Ruff](https://img.shields.io/badge/lint-Ruff-D7FF64?logo=ruff&logoColor=black)](https://docs.astral.sh/ruff/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Scope](https://img.shields.io/badge/scope-hardware--free-orange)](#scope-and-limitations)
 
-<img src="docs/assets/project-overview.svg" width="920" alt="OneVideo2Policy measured project overview">
+<img src="docs/assets/metric-registered-demo.gif" width="760" alt="Metric registered Gaussian scene with a Panda robot performing the ball-to-bowl task">
 
-<sub>Measured local pipeline: metric HOI4D geometry, Gaussian appearance data, and a robust ball-to-bowl policy.</sub>
+<sub>Real project output: a 353-step Panda trajectory depth-composited into two registered views of the reconstructed HOI4D scene.</sub>
 
 </div>
 
-## The question
+## What this project demonstrates
 
-Robot imitation policies need diverse demonstrations, but collecting them usually
-means more teleoperation time, robot access, and hardware wear. OneVideo2Policy asks:
+OneVideo2Policy is an independent, hardware-free reproduction study inspired by
+**Video2Robo**. It tests whether geometry-aware synthetic data from one recorded
+human manipulation sequence can train a small robot policy that survives controlled
+appearance, pose, lighting, and camera shifts.
 
-> Can a single monocular human demonstration be converted into diverse,
-> geometrically consistent synthetic robot demonstrations—and do they improve
-> robustness more than ordinary 2D image augmentation?
+The selected experiment uses one **HOI4D RGB-D ball-to-bowl sequence**. RGB-D is
+retained for metric scale and collision geometry; SAM2.1 Small, CoTracker3, TripoSR,
+and Gaussian splatting provide the lightweight perception and appearance path. A
+measured robosuite task supplies closed-loop evaluation without a physical robot.
 
-This project narrows that question to one reproducible **Place** task: pick up a
-rigid object and place it on a rigid target. The goal is not to reimplement every
-component of Video2Robo or claim a new algorithm. It is to build a careful,
-measurable reproduction of its central data-generation claim.
+### Main result
 
-## At a glance
+A selected checkpoint scored **97/100** across the original five-condition test, but
+a stronger five-training-seed replication scored **76.0 ± 5.8%** under combined shift.
+The system therefore demonstrates useful robustness from diverse synthetic data and
+also reveals meaningful checkpoint sensitivity. The five-seed result misses the
+frozen 80% stability target.
 
-| | Project contract |
-|---|---|
-| **Input** | One 10–20 second monocular RGB human demonstration |
-| **Task** | Tabletop pick, transfer, and place with rigid objects |
-| **Representation** | Per-object 3D Gaussian representation and SE(3) trajectory |
-| **Synthetic output** | Robot demonstrations with geometric and appearance variation |
-| **Policy** | 2.61-million-parameter dual-view visual waypoint model |
-| **Main comparison** | One demo vs. clean 2D data vs. exact geometry vs. Gaussian and robust data |
-| **Current focus** | Hardware-free reproduction complete |
+| Verified result | Measurement | Evidence |
+|---|---:|---|
+| SAM2.1 Small mask quality | source **0.777 IoU**, target **0.920 IoU** | [Perception audit](docs/perception-models.md) |
+| CoTracker3 survival / identity | **0.914 / 0.951**, **0 swaps** | [Perception audit](docs/perception-models.md) |
+| Rotation tracking ablation | **34.89 px → 0.70 px** median error | [JSON](docs/experiments/em1-0406-rotation-ablation.json) |
+| Metric Gaussian scene | **7,007 Gaussians**, **+0.49 dB** held-out PSNR | [JSON](docs/experiments/hoi4d-gaussian-footprint-tuning.json) |
+| Robot-scene registration | **2.7 mm** table-plane residual; **353 samples** | [JSON](docs/experiments/metric-registered-gaussian-demo.json) |
+| Policy size and training | **2.61M parameters**, **4,000 frames**, **55.4 s** | [JSON](docs/experiments/ball-bowl-robustness-results.json) |
+| Selected checkpoint | **97/100** across five conditions | [JSON](docs/experiments/ball-bowl-robustness-results.json) |
+| Five-seed combined shift | **76.0 ± 5.8%**, 190/250 pooled | [JSON](docs/experiments/policy-replication-results.json) |
+| Automated checks | **73 tests**, Ruff clean | [Tests](tests) |
 
-## System overview
+## Pipeline
 
-```mermaid
-flowchart LR
-    A[One monocular<br/>human video] --> B[Segment and<br/>track objects]
-    B --> C[Recover depth and<br/>object geometry]
-    C --> D[Estimate 6D<br/>object trajectories]
-    D --> E[Extract relative<br/>object skill]
-    E --> F[Synthesize robot<br/>trajectory]
-    F --> G[Render diverse<br/>3DGS demonstrations]
-    G --> H[Train visual waypoint<br/>policy]
-    H --> I[Evaluate controlled<br/>distribution shifts]
-    I -. Optional extension .-> J[Validate on a<br/>physical robot]
+<img src="docs/assets/project-overview.svg" width="100%" alt="OneVideo2Policy pipeline from video through perception, metric geometry, Gaussian scene generation, simulation, and policy evaluation">
 
-    classDef active fill:#e8f5ff,stroke:#1677a8,stroke-width:2px,color:#102a43;
-    classDef future fill:#f6f8fa,stroke:#8c959f,stroke-dasharray:5 5,color:#57606a;
-    class A,B,C,D,E,F,G,H,I active;
-    class J future;
-```
+| Stage | Selected local component | Why it is used |
+|---|---|---|
+| Object masks | **SAM2.1 Hiera Small** | Smallest tested SAM2.1 variant that passed the independent mask gate |
+| Point tracks | **CoTracker3** | Preserves orientation information that mask-only fitting loses |
+| Visual mesh proposal | **TripoSR-128** | Watertight output with **1.87 GB** measured peak GPU allocation |
+| Metric geometry | **HOI4D depth + fitted primitives** | Learned single-image meshes failed the 15% dimension gate |
+| Scene appearance | **RGB-D initialized 3D Gaussian splats** | Lightweight view synthesis and controlled background variation |
+| Robot task | **robosuite Panda ball-to-bowl** | Uses measured **38.321 mm** ball and **99.123 × 56.933 mm** bowl |
+| Learned policy | **Dual-view visual waypoint network** | Compact 2.61M-parameter localization model with scripted task phases |
+| Evaluation | **Paired closed-loop rollouts** | Holds episode seeds fixed across data and perturbation ablations |
 
-Solid nodes define the completed project scope. The dashed physical-robot node is an
-optional extension that requires external hardware, calibration, and safety validation.
+The policy predicts task-relevant waypoints from two images. A deterministic controller
+executes approach, grasp, transfer, place, and retreat. This isolates visual localization
+from low-level control and keeps the experiment practical on a 6 GB GPU.
 
-## Project status
+## Real generated outputs
 
-The repository includes a runnable local end-to-end systems baseline and a local
-model-assisted run contract. The hardware-free project scope is complete. The reported
-selected-checkpoint result is 97/100 held-out simulated rollouts. A subsequent
-five-seed combined-shift replication obtains 76.0% mean success (5.8 percentage
-point standard deviation), below the frozen 80% gate. Physical robot success and
-sim-to-real transfer were not evaluated and are outside the project scope.
+<table>
+<tr>
+<td width="50%" align="center"><img src="docs/assets/metric-registered-demo.gif" width="100%" alt="Dual-view metric registered Gaussian robot demonstration"></td>
+<td width="50%" align="center"><img src="docs/assets/gaussian-object-trajectory.gif" width="100%" alt="Recovered ball trajectory animated in the fused Gaussian scene"></td>
+</tr>
+<tr>
+<td><b>Metric robot demonstration.</b> Two robosuite cameras registered to HOI4D task anchors. Robot pixels are depth-composited with the Gaussian scene; foreground visibility is 99.2–99.4%.</td>
+<td><b>Recovered object motion.</b> The ball trajectory is replayed through a fused 7,007-Gaussian RGB-D scene. This output drives background and motion-conditioned data generation.</td>
+</tr>
+</table>
 
-| Component | Status | Evidence / next deliverable |
-|---|:---:|---|
-| Place benchmark and thresholds | ✅ | [`configs/place.yaml`](configs/place.yaml) |
-| Video sampling and manifests | ✅ | `ov2p prepare-video` |
-| SE(3), relative motion, tracking metrics | ✅ | Unit tested core package |
-| SAM2 and CoTracker3 adapters | ✅ | CUDA run, overlay, and diagnostics complete |
-| Independent perception gate | ✅ | HOI4D GT gate passes with controlled reseeding |
-| Reconstruction preparation | ✅ | Native-resolution RGBA crop export verified |
-| Real-scene metric geometry | ✅ | HOI4D RGB-D plus Record3D proportion reference; primitives retained for collision geometry |
-| HOI4D metric camera and ball trajectory | ✅ | 72 frames; 0.75 px camera reprojection error; 0.28 px Gaussian ball tracking error |
-| Local reconstruction alternatives | ✅ | TripoSR and Stable Fast 3D compared with a metric Record3D proportion reference |
-| Local end-to-end baseline | ✅ | 250 demos; 81/100 held-out rollouts with calibrated HOI4D geometry |
-| Local model bundle | ✅ | Hashed TripoSR/depth inputs and 4–6 GB VRAM contract |
-| Rotation tracking ablation | ✅ | 13-frame asymmetric-object test; held-out error falls 34.89 px → 0.70 px |
-| RGB-D Gaussian scene | ✅ | 7,007 fused Gaussians; tuned held-out views plus a 353-sample metric registered dual-camera robot demo |
-| Task-specific simulator | ✅ | Measured 3.83 cm ball and 9.91 cm bowl; oracle controller passes 3/3 randomized rollouts |
-| Synthetic demonstrations | ✅ | 10/10 measured ball-to-bowl trajectories plus 500 randomized localization frames |
-| Policy benchmark | ✅ | Selected checkpoint: 97/100 across five conditions; five-seed combined shift: 76.0±5.8%, exposing checkpoint variance |
-| CVPR-style report | ✅ | Five-page report, paired coverage ablation, camera severity curve, and 250-rollout multi-seed replication |
-| Physical deployment preflight | ✅ | Calibration validator, safety supervisor, frozen-checkpoint smoke test, artifact hashes, and paired result gate |
-| Matched physical fixtures | ✅ | Watertight 38.321 mm ball and 99.123 × 56.933 mm bowl STL files with audited dimensions |
-| Camera calibration capture | ✅ | Print-ready ChArUco board plus automatic intrinsic, distortion, and robot-frame correspondence extraction |
-| Physical robot evaluation | ➖ | Out of scope because no physical devices are available; the runbook is retained for future extension |
+## Experiments
 
-Legend: ✅ implemented · 🟡 contract/scaffold ready · ➖ outside current scope
+### 1. Synthetic data coverage matters
 
-## Method
+<img src="docs/assets/policy-experiment-summary.png" width="100%" alt="Coverage ablation and camera displacement sensitivity charts">
 
-### 1. Recover temporally coherent object motion
+All rows use the same 50 paired combined-shift episodes. Counts are successes / episodes.
 
-The source and target are segmented in the first frame and associated over time with
-tracked pixels. Initial pose fitting combines rendered RGB, depth, and mask losses.
-Later frames warm-start from the preceding estimate and add a correspondence term:
+| Training coverage | Data size | Combined-shift result |
+|---|---:|---:|
+| One recorded demonstration | 1 trajectory | **3/50 (6%)** |
+| Clean simulator frames | 500 | **1/50 (2%)** |
+| Appearance + object pose | 2,000 | **10/50 (20%)** |
+| + camera variation | 3,000 | **25/50 (50%)** |
+| + combined perturbations | 4,000 | **41/50 (82%)** |
+| Privileged oracle ceiling | — | **50/50 (100%)** |
 
-$$
-\mathcal{L} = \lambda_c\mathcal{L}_{RGB}
-+ \lambda_d\mathcal{L}_{depth}
-+ \lambda_m\mathcal{L}_{mask}
-+ \lambda_t\mathcal{L}_{track}.
-$$
+The clean 500-frame model is worse than the one-demo fit on this shifted test. The gain
+appears only as the training distribution gains pose, appearance, camera, and combined
+coverage; sample count alone does not explain it.
 
-The tracking-loss ablation is a first-class experiment because symmetric objects can
-look correct frame by frame while producing an unstable trajectory.
+### 2. The selected checkpoint is strong but seed-sensitive
 
-### 2. Represent the demonstrated skill as relative motion
+| Test condition | Selected checkpoint |
+|---|---:|
+| Nominal | **20/20** |
+| Camera shift (2 cm) | **19/20** |
+| Half lighting | **20/20** |
+| Gaussian background | **20/20** |
+| All shifts combined | **18/20** |
+| **Total** | **97/100** |
 
-For source and target poses $T_s(t)$ and $T_t(t)$, the task trajectory is:
+Five independent training seeds on a larger, fixed combined-shift test produced
+**82%, 68%, 78%, 72%, and 80%** success. The mean is **76.0%**, the sample standard
+deviation is **5.8 percentage points**, and the pooled count is **190/250**. This is
+the primary reliability result; 97/100 describes one selected checkpoint.
 
-$$
-T_{rel}(t) = T_t(t)^{-1}T_s(t).
-$$
+### 3. Camera displacement is the clearest failure axis
 
-This separates the demonstrated relationship from the original scene layout. A
-manually specified object-relative grasp transform is acceptable for this study; the
-research question is data diversity, not automatic grasp discovery.
+| Camera displacement | 0 cm | 1 cm | 2 cm | 3 cm | 4 cm |
+|---|---:|---:|---:|---:|---:|
+| Success | **49/50** | **47/50** | **38/50** | **30/50** | **25/50** |
+| Rate | 98% | 94% | 76% | 60% | 50% |
 
-### 3. Generate controlled 3D variation
+Performance falls monotonically beyond 1 cm, showing that viewpoint coverage remains
+the largest measured weakness of the compact visual policy.
 
-Once tracking passes its gate, synthetic episodes will vary five independent factors:
+### 4. Tracked correspondences recover motion that masks miss
 
-- source and target pose;
-- nearby camera pose and focal length;
-- background;
-- tabletop texture;
-- Gaussian color-based lighting.
+<table>
+<tr>
+<td width="50%"><img src="docs/assets/em1-0406-rotation-ablation.png" width="100%" alt="Rotation tracking ablation"></td>
+<td width="50%"><img src="docs/assets/em1-0406-reconstruction-proportions.png" width="100%" alt="Single-image reconstruction proportion comparison"></td>
+</tr>
+<tr>
+<td>Across 13 frames and 82 held-out correspondences, tracked fitting cuts median error by <b>98.0%</b> and recovers a median <b>−41.7°</b> image-plane rotation.</td>
+<td>Stable Fast 3D is proportionally closer than TripoSR, but neither learned mesh passes the 15% metric extent gate. RGB-D geometry is retained for physics.</td>
+</tr>
+</table>
 
-Each episode will retain aligned RGB observations, robot actions, joint positions,
-object poses, and generation metadata.
+| Reconstruction | Scale-aligned extents | Peak GPU | Watertight | Max secondary error |
+|---|---:|---:|:---:|---:|
+| RGB-D reference | 81.9 × 60.6 × 35.4 mm | — | — | — |
+| TripoSR-128 | 81.9 × 69.7 × 14.5 mm | **1.87 GB** | Yes | 58.9% |
+| Stable Fast 3D | 81.9 × 68.3 × 23.7 mm | **6.17 GB** | No | 33.1% |
 
-## Evaluation design
+## Reproduce locally
 
-The central benchmark holds the policy architecture fixed and changes only the
-training data:
-
-| Training data | ID | Object pose | Camera | Background | Lighting | Combined |
-|---|---:|---:|---:|---:|---:|---:|
-| One demonstration | — | — | — | — | — | 1/20 |
-| + standard 2D augmentation | — | — | — | — | — | 0/20 |
-| Geometry-only exact-pose ceiling | — | — | — | — | — | 20/20 |
-| **+ Gaussian and rendered robustness data** | 20/20 | 20/20 | 19/20 | 20/20 | 20/20 | 18/20 |
-
-All combined cells use the same seed, ±2 cm camera translation, half lighting, and
-Gaussian background. The one-demo and 2D rows fail this out-of-distribution condition;
-their isolated columns were not run. The exact-pose row is a controller ceiling rather
-than a learned policy. The final row uses one fixed 2.61-million-parameter model.
-
-<div align="center">
-<img src="docs/assets/robustness-results.svg" width="760" alt="Robustness evaluation dimensions">
-<br>
-<sub>Gate D measured results are tracked in <code>docs/experiments/ball-bowl-robustness-results.json</code>.</sub>
-</div>
-
-## Quick start
-
-### Requirements
-
-- Python 3.10+
-- [`uv`](https://docs.astral.sh/uv/)
-- A CUDA-capable GPU later, for perception and reconstruction models
-
-### Install and verify
+### Lightweight package and checks
 
 ```bash
-git clone <your-fork-or-repository-url>
-cd onevideo2policy
-uv sync --extra dev
+git clone https://github.com/phongviet/OneVideo2Policy-From-one-human-video-to-robust-robot-manipulation-data.git
+cd OneVideo2Policy-From-one-human-video-to-robust-robot-manipulation-data
+uv sync --extra dev --extra video
 uv run ov2p validate-config configs/place.yaml
+uv run ruff check .
 uv run pytest
 ```
 
-### Prepare one demonstration
-
-Install the lightweight video extra, then sample a recording at a fixed rate. For
-an RGB-D source, pass the directory containing zero-padded NumPy depth frames:
+### Prepare a video or RGB-D sequence
 
 ```bash
-uv sync --extra video
-uv run ov2p prepare-video path/to/place_demo.mp4 \
-  --output data/interim/place_demo \
-  --fps 30 \
-  --depth-dir path/to/depth
-uv run ov2p validate-manifest data/interim/place_demo/manifest.json
+uv run ov2p prepare-video path/to/demo.mp4 \
+  --output data/interim/demo --fps 30 --max-width 960
+uv run ov2p validate-manifest data/interim/demo/manifest.json
 ```
 
-The commands write numbered RGB frames and validate a versioned `manifest.json`
-containing original frame IDs, timestamps, and aligned RGB/depth paths. Raw and
-generated datasets are ignored by Git. For large RGB-only clips on a small GPU,
-`--max-width 960` downsamples extracted frames while preserving the original
-video and recording both resolutions in the manifest.
+For RGB-D input, add `--depth-dir path/to/depth`. The output manifest records original
+frame IDs, timestamps, image paths, depth alignment, and both source and inference
+resolutions.
 
-### Run the local end-to-end baseline
-
-After perception artifacts exist, the CPU-safe path exercises geometry, trajectory
-recovery, randomized demonstration generation, policy fitting, and rollout gating:
+### Run the CPU-safe end-to-end baseline
 
 ```bash
 uv run ov2p run-local-e2e \
@@ -219,188 +181,55 @@ uv run ov2p run-local-e2e \
   --output results/local_e2e/hoi4d_ball_to_bowl
 ```
 
-See the [two-path execution guide](docs/two-path-execution.md) for the exact claim
-boundary and the local model bundle. The real `IMG_6256.MOV` local
-run and its camera-compensated, target-relative trajectory are documented in the
-[capture audit](docs/data-audits/real-place-img-6255-6256.md). The
-[local handoff](docs/real-place-handoff.md) records the verified transfer package
-and the remaining independent annotation and scene measurements. The
-[local model benchmarks](docs/local-model-benchmarks.md) record measured 6 GB GPU
-alternatives and their current limits. The [Gaussian splatting stage](docs/gaussian-splatting.md) records the
-metric RGB-D initialization, renderer contract, and remaining multiframe work.
+### Re-run the policy study
 
-After producing a binary source-object mask, seed tracking points reproducibly:
+The full study needs robosuite, MuJoCo EGL, PyTorch, and the already generated local
+training data. It runs 5 training seeds and 800 evaluation episodes:
 
 ```bash
-uv run ov2p sample-points source_mask.npy \
-  --count 32 --seed 42 --border 4 \
-  --output data/interim/place_demo/source_points.npy
+MUJOCO_GL=egl PYTHONPATH=scripts .venv/bin/python scripts/run_report_experiments.py
 ```
 
-Run the asymmetric-object rotation ablation directly from the retained Record3D
-archive:
+Generated datasets, checkpoints, rollouts, and reports stay local and are ignored by
+Git. Compact, reviewable measurements are committed under [`docs/experiments`](docs/experiments).
 
-```bash
-PYTHONPATH=src .venv/bin/python scripts/ablate_record3d_rotation.py
-```
-
-This uses the action camera in `EM1-0406`, whose rectangular body and offset lens
-make rotation observable. The tracked similarity fit recovers a median −41.7° image
-plane rotation and reduces median error on 82 held-out correspondences from 34.89 px
-for mask-only pose fitting to 0.70 px. See the
-[tracked report](docs/experiments/em1-0406-rotation-ablation.json) and
-[visual audit](docs/assets/em1-0406-rotation-ablation.png).
-
-## Repository structure
+## Repository map
 
 ```text
-onevideo2policy/
-├── configs/                  # Frozen task, model, metric, and gate settings
-├── data/                     # Local raw/interim/processed data (Git-ignored)
-├── docs/                     # Roadmap, experiment log, failure analysis
-├── experiments/runs/         # Local run outputs (Git-ignored)
-├── results/                  # Tables, plots, and evaluation artifacts
-├── scripts/                  # Thin experiment entry points
-├── src/onevideo2policy/
-│   ├── video/                # Frame preparation and perception protocols
-│   ├── reconstruction/       # Depth/reconstruction protocols
-│   ├── pose_tracking/        # Tracking losses and temporal metrics
-│   ├── skill/                # Relative motion and Place phase extraction
-│   ├── generation/           # Synthetic data engine milestone
-│   ├── policy/               # Compact visual waypoint policy and diagnostics
-│   └── evaluation/           # Dataset and robustness metrics
-└── tests/                    # Fast, model-free unit tests
+configs/                 frozen task, model, metric, and gate settings
+docs/assets/             real GIFs, figures, and diagrams used in this README
+docs/experiments/        compact JSON records for reported measurements
+scripts/                 data generation, model training, rendering, and evaluation
+src/onevideo2policy/     reusable video, geometry, tracking, generation, and policy code
+tests/                   fast CPU-only unit and integration tests
+data/, results/, weights/ local inputs and generated artifacts (ignored)
+reports/                 local paper sources and builds (ignored)
 ```
 
-Optional SAM2 and CoTracker3 installation, pinned revisions, and adapter usage are
-documented in [`docs/perception-models.md`](docs/perception-models.md).
-
-The RGB-D import path for HOI4D's official motion masks is documented in
-[`docs/hoi4d-integration.md`](docs/hoi4d-integration.md).
-
-### Diagnose the robosuite image policy
-
-The local diagnostic path records two camera views, OSC pose actions, next-step
-absolute joint targets, task phases, object and end-effector trajectories, and
-expert recovery states:
-
-```bash
-MUJOCO_GL=egl .venv/bin/python scripts/generate_robosuite_demos.py \
-  --output results/simulation/robosuite_can_100_dual_recovery \
-  --episodes 100 --max-attempts 250 --max-steps 220 \
-  --action-limit 0.8 --recovery-probability 0.03
-
-.venv/bin/python scripts/train_diagnostic_policies.py \
-  --data results/simulation/robosuite_can_100_dual_recovery/demonstrations.npz \
-  --output results/policy/robosuite_controls_100
-
-.venv/bin/python scripts/train_diagnostic_policies.py \
-  --data results/simulation/robosuite_can_100_dual_recovery/demonstrations.npz \
-  --output results/policy/robosuite_visual_waypoint_100 \
-  --models visual_waypoint --epochs 50 --batch-size 256 --loss mse
-
-MUJOCO_GL=egl .venv/bin/python scripts/evaluate_diagnostic_policies.py \
-  --checkpoint results/policy/robosuite_visual_waypoint_100/visual_waypoint.pt \
-  --output results/diagnostics/visual_waypoint_temporal_100_heldout_20 \
-  --episodes 20 --max-steps 220 --seed 31415
-```
-
-The training script compares privileged state control, oracle phase-conditioned
-vision, dual-view action chunking, compact diffusion, and closed-loop absolute-joint
-chunk prediction. It uses phase-balanced sampling plus independent photometric
-and camera perturbations. Closed-loop evaluation stores full robot, object, and
-action trajectories for failure-phase analysis. The selected local policy uses
-coordinate-aware dual-view waypoint estimation with temporal feedback and passes
-19/20 held-out rollouts. See the
-[robosuite diagnostic report](docs/robosuite-policy-diagnostics.md) for measured
-results and the [Video2Robo gap audit](docs/video2robo-gap-audit.md) for the claim
-boundary.
-
-### Run the measured ball-to-bowl policy
-
-The task-specific path uses the HOI4D-fitted ball and bowl dimensions. A cheap
-localization dataset gives broader spatial coverage than repeating complete robot
-trajectories:
-
-```bash
-MUJOCO_GL=egl PYTHONPATH=scripts .venv/bin/python \
-  scripts/generate_ball_localization_data.py \
-  --output results/simulation/ball_localization_500 --samples 500
-
-.venv/bin/python scripts/train_diagnostic_policies.py \
-  --data results/simulation/ball_localization_500/localization.npz \
-  --output results/policy/ball_localization_500 \
-  --models visual_waypoint --epochs 60 --batch-size 128
-
-MUJOCO_GL=egl PYTHONPATH=scripts .venv/bin/python \
-  scripts/evaluate_ball_bowl_waypoint.py \
-  --checkpoint results/policy/ball_localization_500/visual_waypoint.pt \
-  --output results/evaluation/ball_localization_500_random5 --episodes 5
-```
-
-This learned localization plus scripted waypoint controller succeeds in 5/5
-randomized rollouts. The corresponding exact-position controller succeeds in 3/3,
-isolating the earlier failure to visual localization.
-
-The Gaussian appearance experiment keeps MuJoCo's registered Panda, gripper, ball,
-and bowl pixels and replaces unlabeled background pixels with the animated fused
-Gaussian scene. A balanced 2,000-frame model trained across clean/Gaussian appearance
-and reset/demonstration robot poses passes paired 5/5 clean and 5/5 Gaussian-composite
-rollouts. This is an appearance augmentation; the HOI4D and robosuite cameras are not
-metrically registered.
-
-The final robustness model adds rendered ±2 cm camera translations and half-light
-frames. On one shared 20-episode seed it scores 20/20 nominal, 19/20 camera shift,
-20/20 half light, 20/20 Gaussian background, and 18/20 with all shifts combined.
-The aggregate is 97/100 with a 95% Wilson interval of 91.5–99.0%.
-
-## Research gates
-
-The project uses explicit GO/NO-GO checks to prevent downstream ML from hiding an
-upstream geometry failure:
-
-1. **Reconstruction:** both objects are recognizable from useful nearby views.
-2. **Tracking:** identity, mask IoU, track survival, reprojection error, and temporal
-   jitter meet the frozen thresholds.
-3. **Generation:** at least 80–90% of episodes satisfy task and kinematic constraints.
-4. **Learning:** the policy succeeds in-distribution before robustness testing.
-5. **Value:** 3D augmentation is compared honestly with 2D augmentation under
-   controlled shifts—even if the result is negative.
-
-Thresholds live in [`configs/place.yaml`](configs/place.yaml), and the complete plan
-is documented in [`docs/roadmap.md`](docs/roadmap.md). The immediate, acceptance-test
-driven execution plan is in [`docs/next-steps.md`](docs/next-steps.md). Before adding
-data, use the [`place_demo` recording and sourcing guide](docs/recording-guide.md).
-
-## Testing
-
-The current tests are CPU-only and cover transform validation and composition,
-relative trajectories, mask IoU, point survival, reprojection loss, translation
-jitter, Place phase extraction, and configuration loading.
-
-```bash
-uv run ruff check .
-uv run pytest
-```
+More detail: [two-path execution](docs/two-path-execution.md),
+[Gaussian splatting](docs/gaussian-splatting.md),
+[local model benchmarks](docs/local-model-benchmarks.md), and
+[Video2Robo gap audit](docs/video2robo-gap-audit.md).
 
 ## Scope and limitations
 
-- One rigid-object Place task comes before additional tasks.
-- The input claim remains monocular RGB; depth estimates are inferred, not captured.
-- Grasp pose is manually specified in the planned robot synthesis stage.
-- Deformable objects, bimanual control, real-robot deployment, and VLA training are
-  outside the initial scope.
-- SAM2, CoTracker3, TripoSR, Depth Anything V2, Stable Fast 3D, and robosuite are not
-  vendored. Their tested revisions and isolated environments are recorded in the model
-  experiment artifacts.
+- The evidence covers one rigid ball-to-bowl **Place** task in simulation.
+- The selected metric path uses one RGB-D sequence, so the final system is not a
+  strictly monocular reconstruction pipeline.
+- Gaussian splats provide appearance; fitted metric primitives provide collision
+  geometry because both learned mesh alternatives failed the dimension gate.
+- The learned network estimates waypoints; grasp phase logic and low-level control are
+  scripted.
+- Camera variation remains a major failure mode, and five-seed performance is below the
+  frozen 80% robustness target.
+- Physical robot execution, sim-to-real success, deformable objects, bimanual control,
+  and VLA training were not evaluated.
 
-## Acknowledgements
+## Acknowledgements and license
 
-This project is inspired by **Video2Robo** and studies a deliberately narrower version
-of its core claim. It is an independent reproduction and is not affiliated with the
-original authors. Third-party model citations and licenses will be added alongside
-their integrations.
-
-## License
+This independent study is inspired by **Video2Robo** and is not affiliated with its
+authors. SAM2, CoTracker3, TripoSR, Stable Fast 3D, HOI4D, robosuite, and MuJoCo are
+external projects or datasets and are not vendored here. Follow their respective terms
+when downloading models or data.
 
 Released under the [MIT License](LICENSE).

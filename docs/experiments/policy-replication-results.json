@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-28",
+  "task": "measured HOI4D ball-to-bowl in robosuite",
+  "protocol": {
+    "episodes_per_condition": 50,
+    "paired_evaluation_seed": 260928,
+    "training_seeds": [42, 43, 44, 45, 46],
+    "training_samples": 4000,
+    "claim_boundary": "hardware-free closed-loop simulation; no physical robot evaluation"
+  },
+  "five_seed_combined_shift": {
+    "successes_by_seed": [41, 34, 39, 36, 40],
+    "episodes_by_seed": 50,
+    "success_rates": [0.82, 0.68, 0.78, 0.72, 0.80],
+    "mean_success_rate": 0.76,
+    "sample_standard_deviation": 0.05830951894845299,
+    "t_95_interval_for_seed_mean": [0.6875991723123486, 0.8324008276876514],
+    "pooled_successes": 190,
+    "pooled_episodes": 250,
+    "pooled_wilson_95": [0.7033795246798652, 0.8087511595825035]
+  },
+  "training_coverage_ablation": {
+    "one_demo": [3, 50],
+    "clean_500": [1, 50],
+    "appearance_and_pose_2000": [10, 50],
+    "plus_camera_3000": [25, 50],
+    "plus_combined_4000": [41, 50],
+    "oracle": [50, 50]
+  },
+  "camera_displacement_ablation": {
+    "0_cm": [49, 50],
+    "1_cm": [47, 50],
+    "2_cm": [38, 50],
+    "3_cm": [30, 50],
+    "4_cm": [25, 50]
+  }
+}

@@ -20,11 +20,5 @@ weights/*
 !experiments/runs/.gitkeep
 !weights/.gitkeep
 
-# LaTeX build intermediates (the report source and final PDF are committed)
-reports/cvpr/*.aux
-reports/cvpr/*.bbl
-reports/cvpr/*.blg
-reports/cvpr/*.fdb_latexmk
-reports/cvpr/*.fls
-reports/cvpr/*.log
-reports/cvpr/*.out
+# Local paper sources and generated report builds
+/reports/
