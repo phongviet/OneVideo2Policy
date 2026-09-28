@@ -16,56 +16,52 @@
 
 </div>
 
-## What this project demonstrates
+## Problem definition
 
-OneVideo2Policy is an independent, hardware-free reproduction study inspired by
-**Video2Robo**. It tests whether geometry-aware synthetic data from one recorded
-human manipulation sequence can train a small robot policy that survives controlled
-appearance, pose, lighting, and camera shifts.
+Robot policies need variation in object pose, viewpoint, lighting, and scene appearance.
+A single human video provides only one instance of each, while collecting more robot
+trajectories requires hardware and operator time.
 
-The selected experiment uses one **HOI4D RGB-D ball-to-bowl sequence**. RGB-D is
-retained for metric scale and collision geometry; SAM2.1 Small, CoTracker3, TripoSR,
-and Gaussian splatting provide the lightweight perception and appearance path. A
-measured robosuite task supplies closed-loop evaluation without a physical robot.
+**Research question:** can one recorded manipulation be converted into geometrically
+consistent robot training data, on a small local machine, and improve closed-loop
+robustness under controlled shifts?
 
-### Main result
+This study uses one **HOI4D RGB-D ball-to-bowl sequence**. Depth provides metric scale;
+RGB drives segmentation, tracking, Gaussian appearance, and policy observations. The
+final claim is limited to hardware-free robosuite evaluation.
 
-A selected checkpoint scored **97/100** across the original five-condition test, but
-a stronger five-training-seed replication scored **76.0 ± 5.8%** under combined shift.
-The system therefore demonstrates useful robustness from diverse synthetic data and
-also reveals meaningful checkpoint sensitivity. The five-seed result misses the
-frozen 80% stability target.
+## Contributions
 
-| Verified result | Measurement | Evidence |
-|---|---:|---|
-| SAM2.1 Small mask quality | source **0.777 IoU**, target **0.920 IoU** | [Perception audit](docs/perception-models.md) |
-| CoTracker3 survival / identity | **0.914 / 0.951**, **0 swaps** | [Perception audit](docs/perception-models.md) |
-| Rotation tracking ablation | **34.89 px → 0.70 px** median error | [JSON](docs/experiments/em1-0406-rotation-ablation.json) |
-| Metric Gaussian scene | **7,007 Gaussians**, **+0.49 dB** held-out PSNR | [JSON](docs/experiments/hoi4d-gaussian-footprint-tuning.json) |
-| Robot-scene registration | **2.7 mm** table-plane residual; **353 samples** | [JSON](docs/experiments/metric-registered-gaussian-demo.json) |
-| Policy size and training | **2.61M parameters**, **4,000 frames**, **55.4 s** | [JSON](docs/experiments/ball-bowl-robustness-results.json) |
-| Selected checkpoint | **97/100** across five conditions | [JSON](docs/experiments/ball-bowl-robustness-results.json) |
-| Five-seed combined shift | **76.0 ± 5.8%**, 190/250 pooled | [JSON](docs/experiments/policy-replication-results.json) |
-| Automated checks | **73 tests**, Ruff clean | [Tests](tests) |
+1. **A small-device reproduction pipeline.** SAM2.1 Small, CoTracker3, TripoSR-128,
+   RGB-D geometry, and a 2.61M-parameter policy replace the larger TRELLIS/VGGT path.
+2. **A hybrid metric scene.** Gaussian splats model appearance; depth-fitted primitives
+   provide scale and collisions after learned meshes fail the metric geometry gate.
+3. **A controlled robustness study.** Paired data-coverage and camera ablations plus
+   five training seeds distinguish a strong checkpoint from repeatable performance.
+
+## Results at a glance
+
+| Measurement | Result |
+|---|---:|
+| SAM2.1 Small mask IoU | source **0.777**, target **0.920** |
+| CoTracker3 survival / identity swaps | **0.914 / 0.951 / 0** |
+| Tracking ablation error | **34.89 px → 0.70 px** |
+| Metric scene | **7,007 Gaussians**, **+0.49 dB** held-out PSNR |
+| Robot-scene registration | **2.7 mm** plane residual, **353 steps** |
+| Policy training | **4,000 frames**, **55.4 s** |
+| Selected checkpoint | **97/100** across five conditions |
+| Five-seed combined shift | **76.0 ± 5.8%**, 190/250 pooled |
+| Repository checks | **73 tests**, Ruff clean |
+
+Machine-readable results are under [`docs/experiments`](docs/experiments).
 
 ## Pipeline
 
-<img src="docs/assets/project-overview.svg" width="100%" alt="OneVideo2Policy pipeline from video through perception, metric geometry, Gaussian scene generation, simulation, and policy evaluation">
+<img src="docs/assets/project-overview.png" width="100%" alt="Measured five-stage pipeline using actual project outputs: HOI4D RGB-D input, SAM2 and CoTracker perception, a Gaussian metric scene, registered robot synthesis, and closed-loop policy evaluation">
 
-| Stage | Selected local component | Why it is used |
-|---|---|---|
-| Object masks | **SAM2.1 Hiera Small** | Smallest tested SAM2.1 variant that passed the independent mask gate |
-| Point tracks | **CoTracker3** | Preserves orientation information that mask-only fitting loses |
-| Visual mesh proposal | **TripoSR-128** | Watertight output with **1.87 GB** measured peak GPU allocation |
-| Metric geometry | **HOI4D depth + fitted primitives** | Learned single-image meshes failed the 15% dimension gate |
-| Scene appearance | **RGB-D initialized 3D Gaussian splats** | Lightweight view synthesis and controlled background variation |
-| Robot task | **robosuite Panda ball-to-bowl** | Uses measured **38.321 mm** ball and **99.123 × 56.933 mm** bowl |
-| Learned policy | **Dual-view visual waypoint network** | Compact 2.61M-parameter localization model with scripted task phases |
-| Evaluation | **Paired closed-loop rollouts** | Holds episode seeds fixed across data and perturbation ablations |
-
-The policy predicts task-relevant waypoints from two images. A deterministic controller
-executes approach, grasp, transfer, place, and retreat. This isolates visual localization
-from low-level control and keeps the experiment practical on a 6 GB GPU.
+The figure shows actual artifacts from the repository. The recovered ball-to-bowl skill
+is transferred into a measured Panda simulation, varied across pose, camera, lighting,
+and Gaussian background, then used to train and test the same compact waypoint policy.
 
 ## Real generated outputs
 
@@ -225,11 +221,22 @@ More detail: [two-path execution](docs/two-path-execution.md),
 - Physical robot execution, sim-to-real success, deformable objects, bimanual control,
   and VLA training were not evaluated.
 
-## Acknowledgements and license
+## References
 
-This independent study is inspired by **Video2Robo** and is not affiliated with its
-authors. SAM2, CoTracker3, TripoSR, Stable Fast 3D, HOI4D, robosuite, and MuJoCo are
-external projects or datasets and are not vendored here. Follow their respective terms
-when downloading models or data.
+- [Video2Robo: 3DGS-based Synthetic Data from One Video Enables Scalable Robot Learning](https://openaccess.thecvf.com/content/CVPR2026/html/Deng_Video2Robo_3DGS-based_Synthetic_Data_from_One_Video_Enables_Scalable_Robot_CVPR_2026_paper.html)
+- [SAM 2](https://github.com/facebookresearch/sam2)
+- [CoTracker3](https://github.com/facebookresearch/co-tracker)
+- [3D Gaussian Splatting](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/)
+- [TripoSR](https://github.com/VAST-AI-Research/TripoSR)
+- [Stable Fast 3D](https://github.com/Stability-AI/stable-fast-3d)
+- [HOI4D](https://hoi4d.github.io/)
+- [robosuite](https://robosuite.ai/)
+- [MuJoCo](https://mujoco.org/)
+
+This is an independent reproduction and is not affiliated with the referenced authors
+or projects. Third-party models and datasets are not vendored; follow their licenses
+and access terms.
+
+## License
 
 Released under the [MIT License](LICENSE).
