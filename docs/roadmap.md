@@ -34,7 +34,7 @@ Completed evidence:
 16. A print-ready ChArUco target and automatic detector produce native intrinsics,
     distortion, robot-frame correspondences, and held-out camera calibration inputs.
 
-## Remaining gates
+## Evaluation gates
 
 ### Gate A — reconstruction quality (evaluated; learned meshes rejected for metrics)
 
@@ -68,9 +68,10 @@ oracle and learned-policy rollouts verify grasp, transfer, release, and placemen
 
 The selected waypoint policy passes 97/100 total held-out simulated rollouts across
 object pose, ±2 cm camera translation, half lighting, Gaussian background, and their
-combination. The combined condition passes 18/20. Physical transfer remains Gate E.
+combination. The combined condition passes 18/20. This completes the hardware-free
+project scope.
 
-### Gate E — physical validation
+### Optional Gate E — physical validation (out of scope)
 
 The local deployment package and software preflight are complete. The preflight uses
 the frozen policy checkpoint, transforms policy outputs into the robot-base frame,
@@ -80,7 +81,16 @@ geometry. It refuses to arm from the simulation calibration fixture.
 The physical object gate also requires the 3.832 cm source and 9.912 × 5.693 cm target
 geometry used to train and evaluate the selected policy; the separate 3 cm filmed
 object is outside this tolerance.
-The remaining evidence is a measured two-camera calibration and five paired physical
-trials per controller on a real robot. Both scripted and learned controllers must
-reach at least 4/5 successes with zero safety aborts or force violations. Follow
-[`physical-evaluation-runbook.md`](physical-evaluation-runbook.md).
+No physical devices are available for this project, so physical calibration and robot
+trials are explicitly excluded from completion. The repository retains the deployment
+package and runbook as an optional future extension. If hardware becomes available,
+five paired physical trials per controller would be required; both scripted and learned
+controllers would need at least 4/5 successes with zero safety aborts or force
+violations. Follow [`physical-evaluation-runbook.md`](physical-evaluation-runbook.md).
+
+## Completion status
+
+Gates A through D are complete. Gate E is outside the declared hardware-free scope.
+The learned policy is validated in simulation, including controlled camera, lighting,
+Gaussian-background, and combined shifts. No physical-policy or sim-to-real claim is
+made.

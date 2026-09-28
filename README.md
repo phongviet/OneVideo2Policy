@@ -10,7 +10,7 @@
 [![Code style: Ruff](https://img.shields.io/badge/code%20style-Ruff-D7FF64?logo=ruff&logoColor=black)](https://docs.astral.sh/ruff/)
 [![Tests](https://img.shields.io/badge/tests-73%20passing-2EA44F)](#testing)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-early%20research%20prototype-orange)](#project-status)
+[![Status](https://img.shields.io/badge/status-local%20scope%20complete-2EA44F)](#project-status)
 
 <img src="docs/assets/project-overview.svg" width="920" alt="OneVideo2Policy measured project overview">
 
@@ -42,7 +42,7 @@ measurable reproduction of its central data-generation claim.
 | **Synthetic output** | Robot demonstrations with geometric and appearance variation |
 | **Policy** | 2.61-million-parameter dual-view visual waypoint model |
 | **Main comparison** | One demo vs. clean 2D data vs. exact geometry vs. Gaussian and robust data |
-| **Current focus** | Physical robot calibration and validation |
+| **Current focus** | Hardware-free reproduction complete |
 
 ## System overview
 
@@ -56,7 +56,7 @@ flowchart LR
     F --> G[Render diverse<br/>3DGS demonstrations]
     G --> H[Train visual waypoint<br/>policy]
     H --> I[Evaluate controlled<br/>distribution shifts]
-    I --> J[Validate on a<br/>physical robot]
+    I -. Optional extension .-> J[Validate on a<br/>physical robot]
 
     classDef active fill:#e8f5ff,stroke:#1677a8,stroke-width:2px,color:#102a43;
     classDef future fill:#f6f8fa,stroke:#8c959f,stroke-dasharray:5 5,color:#57606a;
@@ -64,14 +64,15 @@ flowchart LR
     class J future;
 ```
 
-Solid nodes are complete locally; the dashed physical-robot node requires external
-hardware, calibration, and safety validation.
+Solid nodes define the completed project scope. The dashed physical-robot node is an
+optional extension that requires external hardware, calibration, and safety validation.
 
 ## Project status
 
-The repository now includes a runnable local end-to-end systems baseline and a
-local model assisted run contract. It does **not** yet claim full SE(3) rotation accuracy,
-physical robot success, or sim-to-real transfer.
+The repository includes a runnable local end-to-end systems baseline and a local
+model-assisted run contract. The hardware-free project scope is complete. The reported
+policy result is 97/100 held-out simulated rollouts; physical robot success and
+sim-to-real transfer were not evaluated and are outside the project scope.
 
 | Component | Status | Evidence / next deliverable |
 |---|:---:|---|
@@ -94,9 +95,9 @@ physical robot success, or sim-to-real transfer.
 | Physical deployment preflight | ✅ | Calibration validator, safety supervisor, frozen-checkpoint smoke test, artifact hashes, and paired result gate |
 | Matched physical fixtures | ✅ | Watertight 38.321 mm ball and 99.123 × 56.933 mm bowl STL files with audited dimensions |
 | Camera calibration capture | ✅ | Print-ready ChArUco board plus automatic intrinsic, distortion, and robot-frame correspondence extraction |
-| Physical robot evaluation | ⬜ | Five scripted plus five learned trials; see [`docs/physical-evaluation-runbook.md`](docs/physical-evaluation-runbook.md) |
+| Physical robot evaluation | ➖ | Out of scope because no physical devices are available; the runbook is retained for future extension |
 
-Legend: ✅ implemented · 🟡 contract/scaffold ready · ⬜ planned
+Legend: ✅ implemented · 🟡 contract/scaffold ready · ➖ outside current scope
 
 ## Method
 
