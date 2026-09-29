@@ -1,0 +1,450 @@
+{
+  "schema_version": 1,
+  "experiment": "HOI4D whole-pipeline cross-action evaluation",
+  "protocol": {
+    "gate_order": [
+      "SAM2",
+      "CoTracker",
+      "RGB-D odometry",
+      "Gaussian scene",
+      "Metric motion",
+      "Skill extraction",
+      "Synthetic baseline",
+      "Visual robot policy"
+    ],
+    "strict_rule": "a sequence passes end to end only if every stage passes with action semantics preserved",
+    "policy_scope": "hardware-free; the synthetic baseline is privileged-state and is not counted as the final visual robot policy"
+  },
+  "sequences": [
+    {
+      "name": "Mug",
+      "sequence_id": "ZY20210800004_H4_C2_N40_S10_s05_T1",
+      "action": "place",
+      "gates": {
+        "SAM2": {
+          "pass": true,
+          "value": 0.9456,
+          "threshold": 0.7
+        },
+        "CoTracker": {
+          "pass": true,
+          "survival": 0.9991,
+          "ground_truth_containment": 0.9991,
+          "thresholds": [
+            0.8,
+            0.8
+          ]
+        },
+        "RGB-D\nodometry": {
+          "pass": true,
+          "median_reprojection_error_px": 0.7211270928382874,
+          "median_depth_residual_m": 0.002790828721896288
+        },
+        "Gaussian\nscene": {
+          "pass": true,
+          "evaluated_coverage": 0.7458810763888889,
+          "mse": 0.007112189935990955,
+          "psnr_db": 21.479966537460363
+        },
+        "Metric\nmotion": {
+          "pass": true,
+          "p90_relative_motion_error_m": 0.0233
+        },
+        "Skill\nextraction": {
+          "pass": false,
+          "skill": "place",
+          "primitive_implemented": true,
+          "blocker": "no separately tracked placement target is present in this sequence"
+        },
+        "Synthetic\nbaseline": {
+          "pass": false,
+          "result": {
+            "type": "privileged-state point-robot systems baseline",
+            "demonstrations": 250,
+            "training_samples": 12000,
+            "observed_initial_to_goal_offset_m": [
+              0.0009,
+              -0.0012,
+              0.0061
+            ],
+            "initial_xy_distance_m": 0.0015,
+            "nontrivial_at_3cm_success_tolerance": false,
+            "episodes": 100,
+            "successes": 100,
+            "success_rate": 1.0
+          }
+        },
+        "Visual robot\npolicy": {
+          "pass": false,
+          "reason": "no matching robosuite task, task-specific demonstrations, or trained visual checkpoint"
+        }
+      },
+      "rgbd_odometry": {
+        "schema_version": 1,
+        "method": "ORB RGB-D PnP with dynamic object mask exclusion",
+        "units": "metres",
+        "frame_count": 100,
+        "path_length_m": 0.2819461786478801,
+        "start_to_end_m": 0.01788667937651495,
+        "median_step_translation_m": 0.002421881646611602,
+        "median_inlier_ratio": 0.9233844103930713,
+        "median_reprojection_error_px": 0.7211270928382874,
+        "median_depth_residual_m": 0.002790828721896288
+      },
+      "gaussian_scene": {
+        "schema_version": 1,
+        "method": "metric RGB-D keyframe fusion with temporal voxel support",
+        "frame_ids": [
+          1,
+          12,
+          24,
+          36,
+          48,
+          60,
+          71
+        ],
+        "reference_frame": 1,
+        "validation_frame": 30,
+        "voxel_size_m": 0.01,
+        "min_static_observations": 2,
+        "gaussian_count": 7658,
+        "label_counts": {
+          "static": 7613,
+          "source": 45,
+          "target": 0
+        },
+        "held_out_render": {
+          "evaluated_coverage": 0.7458810763888889,
+          "mse": 0.007112189935990955,
+          "psnr_db": 21.479966537460363
+        }
+      },
+      "metric_motion": {
+        "valid_frames": 100,
+        "first_frame_surface_to_center_offset_m": [
+          0.01351,
+          -0.00026,
+          0.03451
+        ],
+        "median_calibrated_center_error_m": 0.009,
+        "p90_calibrated_center_error_m": 0.0225,
+        "median_relative_motion_error_m": 0.0091,
+        "p90_relative_motion_error_m": 0.0233
+      },
+      "strict_end_to_end_pass": false
+    },
+    {
+      "name": "Kettle",
+      "sequence_id": "ZY20210800004_H4_C12_N44_S184_s05_T2",
+      "action": "pour",
+      "gates": {
+        "SAM2": {
+          "pass": true,
+          "value": 0.9708,
+          "threshold": 0.7
+        },
+        "CoTracker": {
+          "pass": false,
+          "survival": 0.7928,
+          "ground_truth_containment": 1.0,
+          "thresholds": [
+            0.8,
+            0.8
+          ]
+        },
+        "RGB-D\nodometry": {
+          "pass": true,
+          "median_reprojection_error_px": 0.747040331363678,
+          "median_depth_residual_m": 0.003047619967214199
+        },
+        "Gaussian\nscene": {
+          "pass": false,
+          "evaluated_coverage": 0.7101605902777778,
+          "mse": 0.02280453417270363,
+          "psnr_db": 16.41978794648238
+        },
+        "Metric\nmotion": {
+          "pass": false,
+          "p90_relative_motion_error_m": 0.0709
+        },
+        "Skill\nextraction": {
+          "pass": false,
+          "skill": "pour",
+          "primitive_implemented": false,
+          "blocker": "current skill and controller omit demonstrated object orientation"
+        },
+        "Synthetic\nbaseline": {
+          "pass": false,
+          "result": null
+        },
+        "Visual robot\npolicy": {
+          "pass": false,
+          "reason": "no matching robosuite task, task-specific demonstrations, or trained visual checkpoint"
+        }
+      },
+      "rgbd_odometry": {
+        "schema_version": 1,
+        "method": "ORB RGB-D PnP with dynamic object mask exclusion",
+        "units": "metres",
+        "frame_count": 100,
+        "path_length_m": 1.4655212349538134,
+        "start_to_end_m": 0.5528023756568254,
+        "median_step_translation_m": 0.010240044031514755,
+        "median_inlier_ratio": 0.9237379162191193,
+        "median_reprojection_error_px": 0.747040331363678,
+        "median_depth_residual_m": 0.003047619967214199
+      },
+      "gaussian_scene": {
+        "schema_version": 1,
+        "method": "metric RGB-D keyframe fusion with temporal voxel support",
+        "frame_ids": [
+          1,
+          12,
+          24,
+          36,
+          48,
+          60,
+          71
+        ],
+        "reference_frame": 1,
+        "validation_frame": 30,
+        "voxel_size_m": 0.01,
+        "min_static_observations": 2,
+        "gaussian_count": 6111,
+        "label_counts": {
+          "static": 5983,
+          "source": 128,
+          "target": 0
+        },
+        "held_out_render": {
+          "evaluated_coverage": 0.7101605902777778,
+          "mse": 0.02280453417270363,
+          "psnr_db": 16.41978794648238
+        }
+      },
+      "metric_motion": {
+        "valid_frames": 100,
+        "first_frame_surface_to_center_offset_m": [
+          0.00285,
+          -0.00234,
+          -0.07641
+        ],
+        "median_calibrated_center_error_m": 0.0235,
+        "p90_calibrated_center_error_m": 0.0754,
+        "median_relative_motion_error_m": 0.0199,
+        "p90_relative_motion_error_m": 0.0709
+      },
+      "strict_end_to_end_pass": false
+    },
+    {
+      "name": "Trash-can lid",
+      "sequence_id": "ZY20210800004_H4_C14_N28_S211_s02_T2",
+      "action": "open/close",
+      "gates": {
+        "SAM2": {
+          "pass": false,
+          "value": 0.2154,
+          "threshold": 0.7
+        },
+        "CoTracker": {
+          "pass": true,
+          "survival": 1.0,
+          "ground_truth_containment": 1.0,
+          "thresholds": [
+            0.8,
+            0.8
+          ]
+        },
+        "RGB-D\nodometry": {
+          "pass": true,
+          "median_reprojection_error_px": 0.7606751918792725,
+          "median_depth_residual_m": 0.0024646036741296506
+        },
+        "Gaussian\nscene": {
+          "pass": true,
+          "evaluated_coverage": 0.7336458333333333,
+          "mse": 0.007999159642231015,
+          "psnr_db": 20.96955635747049
+        },
+        "Metric\nmotion": {
+          "pass": false,
+          "p90_relative_motion_error_m": 0.0834
+        },
+        "Skill\nextraction": {
+          "pass": false,
+          "skill": "open/close",
+          "primitive_implemented": false,
+          "blocker": "part segmentation fails and no articulated joint state is modeled"
+        },
+        "Synthetic\nbaseline": {
+          "pass": false,
+          "result": null
+        },
+        "Visual robot\npolicy": {
+          "pass": false,
+          "reason": "no matching robosuite task, task-specific demonstrations, or trained visual checkpoint"
+        }
+      },
+      "rgbd_odometry": {
+        "schema_version": 1,
+        "method": "ORB RGB-D PnP with dynamic object mask exclusion",
+        "units": "metres",
+        "frame_count": 100,
+        "path_length_m": 1.0795858512560892,
+        "start_to_end_m": 0.4618559860365977,
+        "median_step_translation_m": 0.005767478918248375,
+        "median_inlier_ratio": 0.9124386252045826,
+        "median_reprojection_error_px": 0.7606751918792725,
+        "median_depth_residual_m": 0.0024646036741296506
+      },
+      "gaussian_scene": {
+        "schema_version": 1,
+        "method": "metric RGB-D keyframe fusion with temporal voxel support",
+        "frame_ids": [
+          1,
+          12,
+          24,
+          36,
+          48,
+          60,
+          71
+        ],
+        "reference_frame": 1,
+        "validation_frame": 30,
+        "voxel_size_m": 0.01,
+        "min_static_observations": 2,
+        "gaussian_count": 6339,
+        "label_counts": {
+          "static": 6323,
+          "source": 16,
+          "target": 0
+        },
+        "held_out_render": {
+          "evaluated_coverage": 0.7336458333333333,
+          "mse": 0.007999159642231015,
+          "psnr_db": 20.96955635747049
+        }
+      },
+      "metric_motion": {
+        "valid_frames": 100,
+        "first_frame_surface_to_center_offset_m": [
+          -0.01809,
+          0.03427,
+          -0.0514
+        ],
+        "median_calibrated_center_error_m": 0.0697,
+        "p90_calibrated_center_error_m": 0.0861,
+        "median_relative_motion_error_m": 0.0669,
+        "p90_relative_motion_error_m": 0.0834
+      },
+      "strict_end_to_end_pass": false
+    },
+    {
+      "name": "Storage door",
+      "sequence_id": "ZY20210800004_H4_C4_N41_S217_s03_T3",
+      "action": "close",
+      "gates": {
+        "SAM2": {
+          "pass": true,
+          "value": 0.8018,
+          "threshold": 0.7
+        },
+        "CoTracker": {
+          "pass": true,
+          "survival": 0.8337,
+          "ground_truth_containment": 1.0,
+          "thresholds": [
+            0.8,
+            0.8
+          ]
+        },
+        "RGB-D\nodometry": {
+          "pass": true,
+          "median_reprojection_error_px": 0.752976655960083,
+          "median_depth_residual_m": 0.003328312152469981
+        },
+        "Gaussian\nscene": {
+          "pass": false,
+          "evaluated_coverage": 0.6473524305555556,
+          "mse": 0.025704494184453607,
+          "psnr_db": 15.899909378020832
+        },
+        "Metric\nmotion": {
+          "pass": false,
+          "p90_relative_motion_error_m": 0.1812
+        },
+        "Skill\nextraction": {
+          "pass": false,
+          "skill": "close",
+          "primitive_implemented": false,
+          "blocker": "no articulated joint state or door manipulation controller"
+        },
+        "Synthetic\nbaseline": {
+          "pass": false,
+          "result": null
+        },
+        "Visual robot\npolicy": {
+          "pass": false,
+          "reason": "no matching robosuite task, task-specific demonstrations, or trained visual checkpoint"
+        }
+      },
+      "rgbd_odometry": {
+        "schema_version": 1,
+        "method": "ORB RGB-D PnP with dynamic object mask exclusion",
+        "units": "metres",
+        "frame_count": 100,
+        "path_length_m": 2.152444992146711,
+        "start_to_end_m": 0.07072151589219802,
+        "median_step_translation_m": 0.020620708866090506,
+        "median_inlier_ratio": 0.9108710330857529,
+        "median_reprojection_error_px": 0.752976655960083,
+        "median_depth_residual_m": 0.003328312152469981
+      },
+      "gaussian_scene": {
+        "schema_version": 1,
+        "method": "metric RGB-D keyframe fusion with temporal voxel support",
+        "frame_ids": [
+          1,
+          12,
+          24,
+          36,
+          48,
+          60,
+          71
+        ],
+        "reference_frame": 1,
+        "validation_frame": 30,
+        "voxel_size_m": 0.01,
+        "min_static_observations": 2,
+        "gaussian_count": 4266,
+        "label_counts": {
+          "static": 4191,
+          "source": 75,
+          "target": 0
+        },
+        "held_out_render": {
+          "evaluated_coverage": 0.6473524305555556,
+          "mse": 0.025704494184453607,
+          "psnr_db": 15.899909378020832
+        }
+      },
+      "metric_motion": {
+        "valid_frames": 97,
+        "first_frame_surface_to_center_offset_m": [
+          -0.02283,
+          0.05254,
+          -0.02667
+        ],
+        "median_calibrated_center_error_m": 0.1418,
+        "p90_calibrated_center_error_m": 0.1922,
+        "median_relative_motion_error_m": 0.1316,
+        "p90_relative_motion_error_m": 0.1812
+      },
+      "strict_end_to_end_pass": false
+    }
+  ],
+  "summary": {
+    "strict_end_to_end_passes": 0,
+    "sequences": 4
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "experiment": "CoTracker3 after selected SAM2 cross-action masks",
+  "protocol": {
+    "checkpoint": "scaled_offline.pth",
+    "points": 32,
+    "reseed_interval_frames": 16,
+    "survival_threshold": 0.8,
+    "ground_truth_containment_threshold": 0.8
+  },
+  "sequences": [
+    {
+      "name": "Mug",
+      "frames": 100,
+      "points_per_window": 32,
+      "reseed_interval_frames": 16,
+      "track_survival": 0.9991,
+      "ground_truth_track_containment": 0.9991,
+      "survival_gate_pass": true,
+      "containment_gate_pass": true
+    },
+    {
+      "name": "Kettle",
+      "frames": 100,
+      "points_per_window": 32,
+      "reseed_interval_frames": 16,
+      "track_survival": 0.7928,
+      "ground_truth_track_containment": 1.0,
+      "survival_gate_pass": false,
+      "containment_gate_pass": true
+    },
+    {
+      "name": "Trash-can lid",
+      "frames": 100,
+      "points_per_window": 32,
+      "reseed_interval_frames": 16,
+      "track_survival": 1.0,
+      "ground_truth_track_containment": 1.0,
+      "survival_gate_pass": true,
+      "containment_gate_pass": true
+    },
+    {
+      "name": "Storage door",
+      "frames": 100,
+      "points_per_window": 32,
+      "reseed_interval_frames": 16,
+      "track_survival": 0.8337,
+      "ground_truth_track_containment": 1.0,
+      "survival_gate_pass": true,
+      "containment_gate_pass": true
+    }
+  ]
+}

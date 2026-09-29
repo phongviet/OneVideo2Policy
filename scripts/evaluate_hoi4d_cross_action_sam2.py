@@ -74,6 +74,12 @@ def main() -> None:
         predictions = predictor.segment_video(
             sequence_work / "frames", [prompt], expected_frame_count=len(references_array)
         )[1]
+        mask_dir = sequence_work / "sam2_masks"
+        mask_dir.mkdir(parents=True, exist_ok=True)
+        for frame_id, prediction in enumerate(predictions):
+            path = mask_dir / f"{frame_id:06d}.png"
+            if not cv2.imwrite(str(path), prediction.astype(np.uint8) * 255):
+                raise OSError(f"Could not write {path}")
         frame_ious = np.array(
             [
                 iou(prediction, reference)

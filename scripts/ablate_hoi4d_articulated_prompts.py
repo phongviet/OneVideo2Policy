@@ -65,6 +65,12 @@ def main() -> None:
         predictions = model.segment_video(
             sequence / "frames", [prompt], expected_frame_count=len(references)
         )[1]
+        mask_dir = sequence / "sam2_part_aware_masks"
+        mask_dir.mkdir(parents=True, exist_ok=True)
+        for frame_id, prediction in enumerate(predictions):
+            path = mask_dir / f"{frame_id:06d}.png"
+            if not cv2.imwrite(str(path), prediction.astype(np.uint8) * 255):
+                raise OSError(f"Could not write {path}")
         values = np.asarray(
             [
                 iou(prediction, reference)

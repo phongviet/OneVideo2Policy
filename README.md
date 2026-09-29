@@ -52,7 +52,7 @@ robosuite evaluation.
 | Policy training | **4,000 frames**, **55.4 s** |
 | Selected checkpoint | **97/100** across five conditions |
 | Five-seed combined shift | **76.0 ± 5.8%**, 190/250 pooled |
-| Cross-action input audit | **5 tasks**, 1,500 pose + 1,500 mask frames |
+| Cross-action pipeline | **4 actions × 8 gates**, **0/4** strict passes |
 | Repository checks | **73 tests**, Ruff clean |
 
 Machine-readable results are under [`docs/experiments`](docs/experiments).
@@ -145,7 +145,7 @@ the largest measured weakness of the compact visual policy.
 | TripoSR-128 | 81.9 × 69.7 × 14.5 mm | **1.87 GB** | Yes | 58.9% |
 | Stable Fast 3D | 81.9 × 68.3 × 23.7 mm | **6.17 GB** | No | 33.1% |
 
-### 5. Other HOI4D actions expose the rigid-skill boundary
+### 5. Other HOI4D actions expose the full pipeline boundary
 
 <img src="docs/assets/hoi4d-cross-action-results.png" width="100%" alt="HOI4D cross-action audit with five real sequence frames, action coverage, object visibility, and representation requirements">
 
@@ -153,10 +153,19 @@ Across 61 local sequences, all have 300 object-pose records and 300 motion masks
 five-sequence audit covers rigid pick/place, pouring, and articulated open/close motion.
 SAM2.1 Small reaches **0.946 mug IoU** and **0.971 kettle IoU**, but a one-point prompt
 fails on the trash-can lid and storage door. Part-aware negatives recover the storage
-door to **0.802 IoU** and leave the trash-can lid unresolved at 0.212. Both articulated
-tasks also require part or joint state. This is an input and perception audit, not
-cross-action policy success. See the [protocol and analysis](docs/hoi4d-cross-action-study.md)
-and [machine-readable results](docs/experiments/hoi4d-cross-action-results.json).
+door to **0.802 IoU** and leave the trash-can lid unresolved at 0.212.
+
+<img src="docs/assets/hoi4d-whole-pipeline-results.png" width="100%" alt="Pass and fail matrix for eight pipeline stages on four HOI4D action classes">
+
+The follow-up runs all eight pipeline gates on the four new RGB-D actions. RGB-D
+odometry passes every row at **0.72–0.76 px** reprojection and **2.5–3.3 mm** depth
+residual. The mug reaches metric motion; kettle, trash-can, and storage sequences fail
+one or more perception or geometry gates. All rows then fail action-aware skill or task
+generation, and none has a matching trained visual policy. The strict result is
+**0/4 end-to-end passes**, which localizes the remaining work beyond SAM2. See the
+[whole-pipeline protocol and analysis](docs/hoi4d-whole-pipeline-study.md), the
+[input audit](docs/hoi4d-cross-action-study.md), and the
+[machine-readable pipeline results](docs/experiments/hoi4d-whole-pipeline-results.json).
 
 ## Reproduce locally
 
@@ -202,6 +211,14 @@ training data. It runs 5 training seeds and 800 evaluation episodes:
 MUJOCO_GL=egl PYTHONPATH=scripts .venv/bin/python scripts/run_report_experiments.py
 ```
 
+Re-run the four-action pipeline matrix after preparing the corresponding HOI4D RGB-D
+sequences and SAM predictions:
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/evaluate_hoi4d_cross_action_tracking.py
+PYTHONPATH=src .venv/bin/python scripts/evaluate_hoi4d_whole_pipeline.py
+```
+
 Generated datasets, checkpoints, rollouts, and reports stay local and are ignored by
 Git. Compact, reviewable measurements are committed under [`docs/experiments`](docs/experiments).
 
@@ -226,8 +243,8 @@ More detail: [two-path execution](docs/two-path-execution.md),
 ## Scope and limitations
 
 - The evidence covers one rigid ball-to-bowl **Place** task in simulation.
-- Other HOI4D action classes have been audited for annotation and representation
-  feasibility, but have not yet been trained and evaluated as closed-loop policies.
+- Four additional HOI4D actions were evaluated through all available pipeline stages;
+  none has a matching task-specific visual policy, so all fail the final policy gate.
 - The selected metric path uses one RGB-D sequence, so the final system is not a
   strictly monocular reconstruction pipeline.
 - Gaussian splats provide appearance; fitted metric primitives provide collision
