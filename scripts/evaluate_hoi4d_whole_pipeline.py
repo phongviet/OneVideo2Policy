@@ -298,7 +298,7 @@ def plot_matrix(rows: list[dict[str, Any]]) -> None:
                 fontsize=8,
             )
     axis.set_title(
-        "Cross-action pipeline gates: later stages require the action semantics",
+        "Where cross-action transfer breaks",
         loc="left",
         fontweight="bold",
     )

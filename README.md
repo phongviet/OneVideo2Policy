@@ -2,7 +2,7 @@
 
 # OneVideo2Policy
 
-### From one human demonstration to robot training data with lightweight 3D perception, SE(3) skill transfer, and closed-loop evaluation
+### From one human demonstration to robot training data and closed-loop policies
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Tests](https://img.shields.io/badge/tests-78%20passing-2EA44F)](#reproduce-the-results)
@@ -35,11 +35,12 @@ stops. All robot executions reported here are in simulation.
 
 ## What this project shows
 
-- **Resource-efficient data generation:** SAM2.1 Small, tracked correspondences, RGB-D
-  geometry, Gaussian splats, and a 2.61M-parameter policy run on the local machine.
+- **Resource-efficient data generation:** the full pipeline uses lightweight perception,
+  RGB-D geometry, Gaussian appearance reconstruction, and a 2.61M-parameter policy
+  designed to run locally.
 - **Synthetic coverage improves robustness:** combined-shift success rises from **6% to
-  82%** as pose, appearance, camera, and joint perturbations are added. Across five
-  training seeds, the result is **76.0 ± 5.8%**.
+  82%** as object-pose, appearance, camera, and combined perturbations are added. Across
+  five training seeds, the result is **76.0 ± 5.8%**.
 - **The action representation matters:** the H2O Pour orientation segment succeeds
   **20/20** with SE(3) and **0/20** with XYZ-only transfer. Rigid Place is supported;
   articulated lid and door actions remain outside the implemented skill model.
@@ -52,7 +53,7 @@ stops. All robot executions reported here are in simulation.
 | Five-seed repeatability | **76.0 ± 5.8%**, 190/250 |
 | H2O Place data and execution | **100/100** demos, **20/20** estimated-translation runs |
 | H2O Pour orientation transfer | SE(3) **20/20**, XYZ **0/20** |
-| Harder HOI4D actions | **0/4** strict end-to-end passes; articulated skills unsupported |
+| Harder HOI4D actions | **0/4** strict E2E; failures expose target, orientation, and articulation gaps |
 
 Machine-readable measurements are committed under
 [`docs/experiments`](docs/experiments).
@@ -161,6 +162,7 @@ Protocols and data: [whole-pipeline study](docs/hoi4d-whole-pipeline-study.md),
 
 Across 13 frames and 82 held-out correspondences, tracked fitting reduces median
 image-plane error from **34.89 px to 0.70 px** and recovers a median **−41.7°** rotation.
+The figure shows one representative frame; these values are the aggregate medians.
 
 ### Why not use a learned mesh for physics?
 
@@ -265,9 +267,9 @@ measurements and README figures are committed for review.
 - [robosuite](https://robosuite.ai/)
 - [MuJoCo](https://mujoco.org/)
 
-This is an independent reproduction and is not affiliated with the referenced authors
-or projects. Third-party models and datasets are not vendored; follow their licenses and
-access terms.
+This is an independent research implementation inspired by Video2Robo and is not
+affiliated with its authors or the referenced projects. Third-party models and datasets
+are not vendored; follow their licenses and access terms.
 
 ## License
 

@@ -194,8 +194,18 @@ def tracking_figure() -> None:
     fig, axes = plt.subplots(1, 3, figsize=(12.6, 3.65))
     panels = [
         (reference, "Reference", "held-out points", None),
-        (observed, "Mask-only transform", "35.6 px error", baseline_prediction),
-        (observed, "Tracked transform", "0.3 px error", tracked_prediction),
+        (
+            observed,
+            "Mask-only transform",
+            "Example frame: 35.6 px",
+            baseline_prediction,
+        ),
+        (
+            observed,
+            "Tracked transform",
+            "Example frame: 0.3 px",
+            tracked_prediction,
+        ),
     ]
     for index, (axis, (image, title, metric, prediction)) in enumerate(
         zip(axes, panels, strict=True)
@@ -278,18 +288,28 @@ def h2o_figure() -> None:
 
     ax = axes[1]
     ax.plot(*place_xyz.T, color=BLUE, lw=2.5, label="Place translation")
-    sample = np.linspace(0, len(pour_motion) - 1, 5, dtype=int)
+    sample = np.linspace(0, len(pour_motion) - 1, 4, dtype=int)
     base = 100 * pour_motion[:, :3, 3]
     ax.plot(*base.T, color=ORANGE, lw=2.2, label="Pour SE(3)")
-    for idx in sample:
+    axis_colors = (RED, GREEN, BLUE)
+    for frame_number, idx in enumerate(sample):
         origin = base[idx]
-        direction = 2.7 * pour_motion[idx, :3, 2]
-        ax.quiver(*origin, *direction, color=ORANGE, linewidth=1.3, arrow_length_ratio=0.25)
+        rotation = pour_motion[idx, :3, :3]
+        for axis_index, axis_color in enumerate(axis_colors):
+            direction = 2.5 * rotation[:, axis_index]
+            ax.quiver(
+                *origin,
+                *direction,
+                color=axis_color,
+                linewidth=1.5,
+                arrow_length_ratio=0.24,
+            )
+        ax.text(*origin, f"R{frame_number}", fontsize=7.5, color=INK, fontweight="bold")
     ax.set_title("2  Recovered skill", fontsize=11.5, fontweight="bold", color=INK)
     ax.text2D(
         0.5,
         -0.10,
-        "object-relative SE(3) · cm",
+        "RGB axes: changing orientation · XYZ-only holds R0",
         transform=ax.transAxes,
         ha="center",
         fontsize=9,
