@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source": "https://raw.githubusercontent.com/taeinkwon/h2odataset/main/action_labels/action_train.txt",
+  "split": "train",
+  "intervals": 569,
+  "place_intervals": 149,
+  "pour_intervals": 15,
+  "place_by_object": {
+    "book": 14,
+    "cappuccino": 18,
+    "chips": 16,
+    "cocoa": 17,
+    "espresso": 17,
+    "lotion": 24,
+    "milk": 18,
+    "spray": 25
+  },
+  "selected_oracle_candidate": {
+    "sequence": "subject1/h1/1",
+    "action": "place milk",
+    "start_frame": 0,
+    "end_frame": 48,
+    "frames": 49,
+    "reason": "short single-object Place interval with a subsequent Pour action"
+  }
+}

@@ -99,3 +99,18 @@ Gates A through D are complete. Gate E is outside the declared hardware-free sco
 The learned policy is evaluated in simulation under controlled camera, lighting,
 Gaussian-background, and combined shifts. Its selected checkpoint is strong, but the
 combined-shift result is seed-sensitive. No physical-policy or sim-to-real claim is made.
+
+## Next research milestone — H2O oracle Place
+
+The four-action HOI4D expansion is complete as a boundary study. The next experiment
+uses one public H2O `place milk` interval to isolate downstream transfer from perception:
+
+1. Load provided object SE(3), camera pose, and two-hand pose annotations.
+2. Infer the object-frame grasp automatically from stable hand-object coupling.
+3. Retarget the relative SE(3) motion to a Panda in MuJoCo.
+4. Require at least 10/20 successful perturbed Place rollouts before generating 100
+   demonstrations or training another policy.
+5. Compare oracle and estimated object poses only after the oracle path passes.
+
+See [`h2o-oracle-place.md`](h2o-oracle-place.md). The official pose archive is gated by
+the H2O academic-use registration and is the only external input still required.

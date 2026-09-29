@@ -5,7 +5,7 @@
 ### One recorded manipulation sequence → metric scene → synthetic robot data → closed-loop policy
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/tests-73%20passing-2EA44F)](#reproduce-locally)
+[![Tests](https://img.shields.io/badge/tests-75%20passing-2EA44F)](#reproduce-locally)
 [![Ruff](https://img.shields.io/badge/lint-Ruff-D7FF64?logo=ruff&logoColor=black)](https://docs.astral.sh/ruff/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Scope](https://img.shields.io/badge/scope-hardware--free-orange)](#scope-and-limitations)
@@ -53,7 +53,7 @@ robosuite evaluation.
 | Selected checkpoint | **97/100** across five conditions |
 | Five-seed combined shift | **76.0 ± 5.8%**, 190/250 pooled |
 | Cross-action pipeline | **4 actions × 8 gates**, **0/4** strict passes |
-| Repository checks | **73 tests**, Ruff clean |
+| Repository checks | **75 tests**, Ruff clean |
 
 Machine-readable results are under [`docs/experiments`](docs/experiments).
 
@@ -238,7 +238,9 @@ reports/                 local paper sources and builds (ignored)
 More detail: [two-path execution](docs/two-path-execution.md),
 [Gaussian splatting](docs/gaussian-splatting.md),
 [local model benchmarks](docs/local-model-benchmarks.md), and
-[Video2Robo gap audit](docs/video2robo-gap-audit.md).
+[Video2Robo gap audit](docs/video2robo-gap-audit.md). The next research gate uses
+[H2O oracle Place](docs/h2o-oracle-place.md) to test automatic human-grasp extraction
+and SE(3) retargeting before another policy is trained.
 
 ## Scope and limitations
 
