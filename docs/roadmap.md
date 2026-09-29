@@ -38,6 +38,11 @@ Completed evidence:
 17. The real H2O `place milk` interval yields 34 automatically selected stable grasp
     frames with 5.14 mm translation RMS and 6.73° rotation p90. Its retargeted SE(3)
     trajectory passes 20/20 perturbed Panda Place rollouts.
+18. The H2O controller generates 100/100 validated demonstrations. A 2.61M-parameter
+    dual-view model reaches 4.62 mm mean translation error and preserves 20/20 Place
+    success with estimated input, matching the 20/20 oracle result.
+19. On the H2O Pour segment through 41.1° tilt, SE(3) passes 20/20 pose-transfer
+    rollouts while XYZ-only passes 0/20.
 
 ## Evaluation gates
 
@@ -103,7 +108,7 @@ The learned policy is evaluated in simulation under controlled camera, lighting,
 Gaussian-background, and combined shifts. Its selected checkpoint is strong, but the
 combined-shift result is seed-sensitive. No physical-policy or sim-to-real claim is made.
 
-## Current research milestone — H2O policy comparison
+## H2O milestone — complete in simulation
 
 The four-action HOI4D expansion is complete as a boundary study. The H2O oracle transfer
 now passes, isolating downstream transfer from perception:
@@ -112,9 +117,11 @@ now passes, isolating downstream transfer from perception:
 2. **Complete:** infer the object-frame grasp from stable hand-object coupling.
 3. **Complete:** retarget the relative SE(3) motion to a Panda in MuJoCo.
 4. **Complete:** pass the 10/20 gate with 20/20 perturbed Place rollouts.
-5. Generate 100 validated demonstrations and train the visual policy.
-6. Compare oracle and estimated object poses, then repeat on `pour milk` with an
+5. **Complete:** generate 100 validated demonstrations and train the visual pose policy.
+6. **Complete:** compare oracle and estimated input, then repeat on `pour milk` with an
    XYZ-only versus full-SE(3) ablation.
 
 See [`h2o-oracle-place.md`](h2o-oracle-place.md) and the
-[`20-rollout record`](experiments/h2o-oracle-place-retarget.json).
+[`policy and Pour study`](h2o-policy-and-pour.md). Evaluation on real H2O RGB-D pixels
+requires the separate gated RGB-D archive and remains outside the locally available
+pose-only data.

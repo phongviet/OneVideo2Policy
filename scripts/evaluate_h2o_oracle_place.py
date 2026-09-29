@@ -1,4 +1,4 @@
-"""Evaluate the annotation-free H2O oracle Place handoff before policy training."""
+"""Evaluate an annotation-free H2O oracle action before policy training."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def main() -> None:
     parser.add_argument("--dataset-root", required=True, type=Path)
     parser.add_argument("--action-index", required=True, type=Path)
     parser.add_argument("--sequence", default="subject1/h1/1")
-    parser.add_argument("--action-id", default=13, type=int, choices=range(9, 17))
+    parser.add_argument("--action-id", default=13, type=int, choices=sorted(ACTION_NAMES))
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -48,7 +48,7 @@ def main() -> None:
     net_rotation = rotation_angle_deg(motion[-1, :3, :3])
     result = {
         "schema_version": 1,
-        "experiment": "H2O oracle Place handoff",
+        "experiment": f"H2O oracle {matches[0].action} handoff",
         "sequence": matches[0].sequence,
         "action": matches[0].action,
         "frames": len(matches[0].frame_ids),
@@ -72,8 +72,9 @@ def main() -> None:
         ),
     }
     args.output.mkdir(parents=True, exist_ok=True)
+    action_kind = matches[0].action.split()[0]
     np.savez_compressed(
-        args.output / "oracle-place-trajectory.npz",
+        args.output / f"oracle-{action_kind}-trajectory.npz",
         frame_ids=matches[0].frame_ids,
         object_to_world=trajectory.object_to_world,
         object_relative_motion=motion,

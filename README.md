@@ -5,7 +5,7 @@
 ### One recorded manipulation sequence → metric scene → synthetic robot data → closed-loop policy
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/tests-77%20passing-2EA44F)](#reproduce-locally)
+[![Tests](https://img.shields.io/badge/tests-78%20passing-2EA44F)](#reproduce-locally)
 [![Ruff](https://img.shields.io/badge/lint-Ruff-D7FF64?logo=ruff&logoColor=black)](https://docs.astral.sh/ruff/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Scope](https://img.shields.io/badge/scope-hardware--free-orange)](#scope-and-limitations)
@@ -54,7 +54,9 @@ robosuite evaluation.
 | Five-seed combined shift | **76.0 ± 5.8%**, 190/250 pooled |
 | Cross-action pipeline | **4 actions × 8 gates**, **0/4** strict passes |
 | H2O oracle SE(3) retargeting | **20/20** perturbed Panda Place rollouts |
-| Repository checks | **77 tests**, Ruff clean |
+| H2O learned pose Place | **20/20 estimated**, **20/20 oracle** |
+| H2O Pour representation | **SE(3) 20/20**, XYZ **0/20** |
+| Repository checks | **78 tests**, Ruff clean |
 
 Machine-readable results are under [`docs/experiments`](docs/experiments).
 
@@ -168,6 +170,23 @@ generation, and none has a matching trained visual policy. The strict result is
 [input audit](docs/hoi4d-cross-action-study.md), and the
 [machine-readable pipeline results](docs/experiments/hoi4d-whole-pipeline-results.json).
 
+### 6. H2O closes the oracle-to-policy diagnostic
+
+One public H2O `place milk` interval automatically yields 34 stable grasp frames and a
+full object-relative SE(3) trajectory. The corrected oracle controller passes **20/20**
+perturbed Place rollouts. It then generates **100/100** validated demonstrations with
+23,972 control samples and 1,768 dual-view pose frames.
+
+A 2.61M-parameter visual pose model trains locally in 25.8 seconds. On 20 held-out
+paired simulator starts, both oracle and estimated translation produce **20/20** Place
+success. Translation error is 4.62 mm mean and 7.39 mm p90. Absolute yaw error remains
+high because the can proxy is rotationally symmetric and the top grasp does not use
+yaw.
+
+The `pour milk` interval contains a 40° early tilt and an 80.9° peak tilt. On the
+controlled 40° segment, full SE(3) retargeting passes **20/20**, while XYZ-only passes
+**0/20**. See the [H2O policy and Pour study](docs/h2o-policy-and-pour.md).
+
 ## Reproduce locally
 
 ### Lightweight package and checks
@@ -240,9 +259,9 @@ More detail: [two-path execution](docs/two-path-execution.md),
 [Gaussian splatting](docs/gaussian-splatting.md),
 [local model benchmarks](docs/local-model-benchmarks.md), and
 [Video2Robo gap audit](docs/video2robo-gap-audit.md). The
-[H2O oracle Place](docs/h2o-oracle-place.md) gate now passes 20/20 perturbed rollouts;
-the next experiment trains a policy from those validated trajectories and compares
-oracle with estimated object poses.
+[H2O oracle Place](docs/h2o-oracle-place.md) and
+[policy and Pour](docs/h2o-policy-and-pour.md) experiments now cover oracle transfer,
+100-demo generation, learned pose execution, and the XYZ-versus-SE(3) ablation.
 
 ## Scope and limitations
 

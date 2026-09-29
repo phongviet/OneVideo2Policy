@@ -397,3 +397,29 @@
 - Artifacts: `docs/experiments/physical-software-preflight.json`,
   `docs/experiments/physical-gate-validator-fixture.json`, and
   `docs/physical-evaluation-runbook.md`.
+
+## H2O oracle, learned pose, and Pour representation
+
+- Date / commit: 2026-09-29 / pending
+- Source: H2O `subject1/h1/1`, `place milk` frames 0–48 and `pour milk`
+  frames 304–442. No per-sequence manual mask, grasp, pose, or action annotation.
+- Automatic Place grasp: right hand, 34 stable frames, 5.14 mm object-frame
+  translation RMS, and 6.73° rotation p90.
+- Corrected oracle transfer: the OSC orientation command sign was diagnosed with a
+  direct rotation test and fixed. The rerun passes 20/20 perturbed Place rollouts
+  with 2.47 cm mean final target XY error.
+- Demonstration generation: 100/100 successful attempts, 23,972 control samples,
+  1,768 dual-view pose frames, and 239.72 mean steps per episode.
+- Learned pose: the 2.61M-parameter model trains in 25.8 seconds. Held-out synthetic
+  translation error is 3.54 mm mean and 7.88 mm p90. A separate 20-start execution
+  test measures 4.62 mm mean and 7.39 mm p90 error.
+- Place comparison: oracle 20/20, estimated translation 20/20. Absolute yaw is poorly
+  identified for the symmetric can and is scored but unused by the top grasp.
+- Pour ablation: the real action reaches 80.9° peak tilt. On the prefix through 41.1°,
+  full SE(3) passes 20/20 and XYZ-only passes 0/20; mean gripper orientation errors
+  are 2.84° and 59.17°.
+- Scope: the visual model is trained and evaluated on robosuite images. The gated H2O
+  RGB-D archive is not present, and the Pour proxy has no liquid dynamics.
+- Artifacts: `docs/h2o-policy-and-pour.md`,
+  `docs/experiments/h2o-place-oracle-vs-estimated.json`, and
+  `docs/experiments/h2o-pour-representation-ablation.json`.

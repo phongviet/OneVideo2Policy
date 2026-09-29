@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "experiment": "H2O Pour XYZ versus SE(3) representation",
+  "source": "subject1/h1/1 pour milk frames 304-442",
+  "source_motion": {
+    "frames": 139,
+    "stable_grasp_frames": 139,
+    "net_translation_m": 0.1311278822902215,
+    "net_rotation_deg": 29.53300786437917,
+    "peak_tilt_frame_offset": 95,
+    "peak_tilt_deg": 80.90318337922297,
+    "evaluated_tilt_deg": 41.13867495013417,
+    "evaluated_segment": "action start through first 40deg tilt, frames 0-29"
+  },
+  "success_definition": "gripper position error <=3cm, rotation error <=10deg, grasp retained",
+  "results": {
+    "xyz": {
+      "successes": 0,
+      "episodes": 20,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.015720604058707018,
+      "mean_orientation_error_deg": 59.32398010280109,
+      "mean_achieved_rotation_deg": 23.66453168897369,
+      "mean_eef_position_error_m": 0.011349244550807169,
+      "mean_eef_orientation_error_deg": 59.172894984966184
+    },
+    "se3": {
+      "successes": 20,
+      "episodes": 20,
+      "success_rate": 1.0,
+      "mean_position_error_m": 0.01371145142212971,
+      "mean_orientation_error_deg": 3.245731664873083,
+      "mean_achieved_rotation_deg": 38.50374758915528,
+      "mean_eef_position_error_m": 0.0009020379581908466,
+      "mean_eef_orientation_error_deg": 2.836025287199196
+    }
+  },
+  "gate": {
+    "minimum_se3_successes": 16,
+    "maximum_xyz_successes": 4,
+    "episodes": 20,
+    "pass": true
+  },
+  "episodes_detail": {
+    "xyz": [
+      {
+        "success": false,
+        "steps": 125,
+        "completed_waypoints": 20,
+        "position_error_m": 0.010787621639906724,
+        "orientation_error_deg": 40.557830929685096,
+        "achieved_rotation_deg": 1.1956626680860496,
+        "eef_position_error_m": 0.010914179848814522,
+        "eef_orientation_error_deg": 41.28557012553935,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 122,
+        "completed_waypoints": 20,
+        "position_error_m": 0.012517854677608386,
+        "orientation_error_deg": 41.31230021074182,
+        "achieved_rotation_deg": 0.1918674136375965,
+        "eef_position_error_m": 0.012634626289147268,
+        "eef_orientation_error_deg": 41.3113014518538,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 119,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013088238638369542,
+        "orientation_error_deg": 41.26783103299908,
+        "achieved_rotation_deg": 0.23638574287984326,
+        "eef_position_error_m": 0.013211380734855439,
+        "eef_orientation_error_deg": 41.26818037846841,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 120,
+        "completed_waypoints": 20,
+        "position_error_m": 0.010165219836647922,
+        "orientation_error_deg": 40.51146360324071,
+        "achieved_rotation_deg": 1.1779026567514002,
+        "eef_position_error_m": 0.010264888401637124,
+        "eef_orientation_error_deg": 41.22022376280009,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 291,
+        "completed_waypoints": 20,
+        "position_error_m": 0.03315803872610894,
+        "orientation_error_deg": 70.91028098422075,
+        "achieved_rotation_deg": 51.01377559315208,
+        "eef_position_error_m": 0.015867095380733456,
+        "eef_orientation_error_deg": 70.88062584247105,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 114,
+        "completed_waypoints": 20,
+        "position_error_m": 0.012511412559021997,
+        "orientation_error_deg": 40.64757533164357,
+        "achieved_rotation_deg": 0.9841280259906937,
+        "eef_position_error_m": 0.01260797387347264,
+        "eef_orientation_error_deg": 41.22476325001851,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 111,
+        "completed_waypoints": 20,
+        "position_error_m": 0.011030470886356766,
+        "orientation_error_deg": 41.17304247335114,
+        "achieved_rotation_deg": 0.11199515092377646,
+        "eef_position_error_m": 0.011100346343236814,
+        "eef_orientation_error_deg": 41.17509519024395,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 112,
+        "completed_waypoints": 20,
+        "position_error_m": 0.01066917957465422,
+        "orientation_error_deg": 41.17889024875526,
+        "achieved_rotation_deg": 0.135713906946187,
+        "eef_position_error_m": 0.010744894436924193,
+        "eef_orientation_error_deg": 41.17778275306015,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 232,
+        "completed_waypoints": 20,
+        "position_error_m": 0.022150696208105974,
+        "orientation_error_deg": 93.31880991796947,
+        "achieved_rotation_deg": 95.30451056195919,
+        "eef_position_error_m": 0.005910045361247333,
+        "eef_orientation_error_deg": 93.78913401273583,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 124,
+        "completed_waypoints": 20,
+        "position_error_m": 0.010273517067743019,
+        "orientation_error_deg": 41.30417061406659,
+        "achieved_rotation_deg": 0.18176929075760337,
+        "eef_position_error_m": 0.010389665361500914,
+        "eef_orientation_error_deg": 41.30366462486044,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 121,
+        "completed_waypoints": 20,
+        "position_error_m": 0.010798175811589282,
+        "orientation_error_deg": 42.244291235717775,
+        "achieved_rotation_deg": 1.5664969468172678,
+        "eef_position_error_m": 0.010892197426083845,
+        "eef_orientation_error_deg": 41.289554917572815,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 114,
+        "completed_waypoints": 20,
+        "position_error_m": 0.009718440371947912,
+        "orientation_error_deg": 40.56678862471659,
+        "achieved_rotation_deg": 1.059560630560446,
+        "eef_position_error_m": 0.009795041244532747,
+        "eef_orientation_error_deg": 41.23710363631651,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 200,
+        "completed_waypoints": 20,
+        "position_error_m": 0.028354577075577394,
+        "orientation_error_deg": 109.21506753280957,
+        "achieved_rotation_deg": 73.88485156357797,
+        "eef_position_error_m": 0.013003699589468112,
+        "eef_orientation_error_deg": 106.32214311202772,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 111,
+        "completed_waypoints": 20,
+        "position_error_m": 0.012052656859660296,
+        "orientation_error_deg": 40.571511470423076,
+        "achieved_rotation_deg": 1.067467229908152,
+        "eef_position_error_m": 0.012139767807225109,
+        "eef_orientation_error_deg": 41.27958472133571,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 294,
+        "completed_waypoints": 20,
+        "position_error_m": 0.03421454435420073,
+        "orientation_error_deg": 169.4166229980988,
+        "achieved_rotation_deg": 143.04928626469814,
+        "eef_position_error_m": 0.01640504071341494,
+        "eef_orientation_error_deg": 169.41710492247373,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 110,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013054150778931994,
+        "orientation_error_deg": 41.72771346743894,
+        "achieved_rotation_deg": 0.732553920271561,
+        "eef_position_error_m": 0.01316174510940998,
+        "eef_orientation_error_deg": 41.2787325517944,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 142,
+        "completed_waypoints": 20,
+        "position_error_m": 0.009521483802056639,
+        "orientation_error_deg": 54.95128701079405,
+        "achieved_rotation_deg": 22.480026470199512,
+        "eef_position_error_m": 0.00246970306564601,
+        "eef_orientation_error_deg": 55.21906544421967,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 199,
+        "completed_waypoints": 20,
+        "position_error_m": 0.027888646141665453,
+        "orientation_error_deg": 113.15077734712135,
+        "achieved_rotation_deg": 78.50010889221153,
+        "eef_position_error_m": 0.012794077853181146,
+        "eef_orientation_error_deg": 110.32373322274137,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 120,
+        "completed_waypoints": 20,
+        "position_error_m": 0.009983271015144634,
+        "orientation_error_deg": 41.21239313299802,
+        "achieved_rotation_deg": 0.18560912247535294,
+        "eef_position_error_m": 0.01008638342161246,
+        "eef_orientation_error_deg": 41.21289167374877,
+        "grasped": true
+      },
+      {
+        "success": false,
+        "steps": 116,
+        "completed_waypoints": 20,
+        "position_error_m": 0.012473885148842593,
+        "orientation_error_deg": 41.2409538892303,
+        "achieved_rotation_deg": 0.2309617276695164,
+        "eef_position_error_m": 0.012592138753999338,
+        "eef_orientation_error_deg": 41.24164410504139,
+        "grasped": true
+      }
+    ],
+    "se3": [
+      {
+        "success": true,
+        "steps": 174,
+        "completed_waypoints": 20,
+        "position_error_m": 0.01410418366040945,
+        "orientation_error_deg": 2.8389486895892087,
+        "achieved_rotation_deg": 38.39145298765792,
+        "eef_position_error_m": 0.0010989292311411028,
+        "eef_orientation_error_deg": 2.83575306834905,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 170,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013972597254591925,
+        "orientation_error_deg": 2.8001378873288747,
+        "achieved_rotation_deg": 38.42592906087688,
+        "eef_position_error_m": 0.0010736681257076841,
+        "eef_orientation_error_deg": 2.7984503123308775,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 170,
+        "completed_waypoints": 20,
+        "position_error_m": 0.014032729708319439,
+        "orientation_error_deg": 2.5464311871515624,
+        "achieved_rotation_deg": 39.17552160643471,
+        "eef_position_error_m": 0.0010490699566081743,
+        "eef_orientation_error_deg": 2.8170988448445278,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 176,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013997519818581534,
+        "orientation_error_deg": 2.8402843146293755,
+        "achieved_rotation_deg": 38.39103024275808,
+        "eef_position_error_m": 0.0011129824918092884,
+        "eef_orientation_error_deg": 2.8392016481386775,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 170,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013975617417344292,
+        "orientation_error_deg": 2.838205805232441,
+        "achieved_rotation_deg": 38.397770653775304,
+        "eef_position_error_m": 0.0011406676886356612,
+        "eef_orientation_error_deg": 2.8465817551911994,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 166,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013547613876327797,
+        "orientation_error_deg": 3.562563293073837,
+        "achieved_rotation_deg": 40.88190659724567,
+        "eef_position_error_m": 0.0007608141577512369,
+        "eef_orientation_error_deg": 2.8469036529598784,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 160,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013314956086122836,
+        "orientation_error_deg": 2.8428182931607977,
+        "achieved_rotation_deg": 38.37587636946907,
+        "eef_position_error_m": 0.0006804990311843816,
+        "eef_orientation_error_deg": 2.8423728080057695,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 159,
+        "completed_waypoints": 20,
+        "position_error_m": 0.014273553488708379,
+        "orientation_error_deg": 2.8512433704438584,
+        "achieved_rotation_deg": 38.367038611089484,
+        "eef_position_error_m": 0.0006880688608017063,
+        "eef_orientation_error_deg": 2.84934500474071,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 170,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013890415241535553,
+        "orientation_error_deg": 2.8160963869374958,
+        "achieved_rotation_deg": 38.408958823541006,
+        "eef_position_error_m": 0.0009824083463212691,
+        "eef_orientation_error_deg": 2.813277890553664,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 172,
+        "completed_waypoints": 20,
+        "position_error_m": 0.014055553987736816,
+        "orientation_error_deg": 2.7187861508809754,
+        "achieved_rotation_deg": 38.60229362745048,
+        "eef_position_error_m": 0.0011450954807928266,
+        "eef_orientation_error_deg": 2.838406852194694,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 167,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013317378524965947,
+        "orientation_error_deg": 2.8644274548550763,
+        "achieved_rotation_deg": 38.362116760167744,
+        "eef_position_error_m": 0.0007530114395245677,
+        "eef_orientation_error_deg": 2.865125603513695,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 161,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013303603973640627,
+        "orientation_error_deg": 4.524648309873994,
+        "achieved_rotation_deg": 36.8080594311837,
+        "eef_position_error_m": 0.0007653447312957303,
+        "eef_orientation_error_deg": 2.8435667427724054,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 166,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013414522286585956,
+        "orientation_error_deg": 4.853978459765931,
+        "achieved_rotation_deg": 36.56311324066522,
+        "eef_position_error_m": 0.0007610924832751359,
+        "eef_orientation_error_deg": 2.8603257490773935,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 170,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013606347231577044,
+        "orientation_error_deg": 3.1637230408148773,
+        "achieved_rotation_deg": 40.469207370202845,
+        "eef_position_error_m": 0.0007363193126883378,
+        "eef_orientation_error_deg": 2.8621660830906155,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 167,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013594422605068955,
+        "orientation_error_deg": 2.8172869753469865,
+        "achieved_rotation_deg": 38.41270336316457,
+        "eef_position_error_m": 0.0010085405929712707,
+        "eef_orientation_error_deg": 2.8132261694330825,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 161,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013397070593541976,
+        "orientation_error_deg": 4.62130842294095,
+        "achieved_rotation_deg": 36.743137622979255,
+        "eef_position_error_m": 0.0007665058714517284,
+        "eef_orientation_error_deg": 2.807464754024525,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 165,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013297383835898123,
+        "orientation_error_deg": 3.1334699166273063,
+        "achieved_rotation_deg": 38.01258030007091,
+        "eef_position_error_m": 0.0007432486738166757,
+        "eef_orientation_error_deg": 2.836805689835949,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 166,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013170465624864647,
+        "orientation_error_deg": 3.539437979226924,
+        "achieved_rotation_deg": 37.61011891763532,
+        "eef_position_error_m": 0.0007345265917303815,
+        "eef_orientation_error_deg": 2.8586878175422834,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 173,
+        "completed_waypoints": 20,
+        "position_error_m": 0.014068610286458682,
+        "orientation_error_deg": 2.8354210539482936,
+        "achieved_rotation_deg": 38.3935240531369,
+        "eef_position_error_m": 0.001067277330462741,
+        "eef_orientation_error_deg": 2.8316606036096115,
+        "grasped": true
+      },
+      {
+        "success": true,
+        "steps": 171,
+        "completed_waypoints": 20,
+        "position_error_m": 0.013894482940314132,
+        "orientation_error_deg": 3.9054163056329,
+        "achieved_rotation_deg": 41.28261214360067,
+        "eef_position_error_m": 0.00097268876584703,
+        "eef_orientation_error_deg": 2.814084693775315,
+        "grasped": true
+      }
+    ]
+  },
+  "elapsed_seconds": 60.9694743680011,
+  "limitations": [
+    "the simulator uses a grasped can and pose goal rather than liquid dynamics",
+    "success scores the retargeted gripper pose because the proxy can can slip in-hand",
+    "the result tests orientation-sensitive motion transfer, not pouring volume"
+  ]
+}

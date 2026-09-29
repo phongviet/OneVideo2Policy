@@ -24,9 +24,9 @@ def osc_action(
     position_error = np.clip((position - observation["robot0_eef_pos"]) / 0.05, -0.35, 0.35)
     target_quaternion = transform.mat2quat(orientation)
     rotation_error = np.clip(
-        transform.get_orientation_error(target_quaternion, observation["robot0_eef_quat"]),
-        -0.25,
-        0.25,
+        transform.get_orientation_error(observation["robot0_eef_quat"], target_quaternion),
+        -0.1,
+        0.1,
     )
     return np.r_[position_error, rotation_error, gripper]
 

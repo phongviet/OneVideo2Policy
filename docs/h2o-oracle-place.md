@@ -61,7 +61,7 @@ Both oracle gates pass on the real H2O annotations:
 | Object-frame grasp rotation p90 | 6.73° |
 | Object motion | 10.57 cm, 7.45° |
 | Perturbed Panda Place rollouts | **20/20 (100%)** |
-| Final target XY error | 2.71 cm mean, 1.44–3.72 cm range |
+| Final target XY error | 2.47 cm mean, 1.41–3.32 cm range |
 | Retarget scale | 2.28× mean, 2.15–2.36× range |
 
 The controller downsamples the 34-frame stable interval to 12 SE(3) waypoints, applies
@@ -70,9 +70,10 @@ uses the H2O relative rotations for gripper orientation. The simulator randomize
 can 19–22 cm from the target. This clearance keeps the can outside the bin collision
 wall; the initial 13.5–15.5 cm setup overlapped the wall and invalidated the grasp point.
 
-This result validates oracle grasp extraction and trajectory retargeting. It does not
-measure visual pose estimation or a learned policy. The simulator also uses a can as a
-milk-container proxy because the H2O object mesh is not included in the pose archive.
+This result validates oracle grasp extraction and trajectory retargeting. The follow-up
+[policy and Pour study](h2o-policy-and-pour.md) adds the learned pose comparison and
+orientation ablation. The simulator uses a can as a milk-container proxy because the
+H2O object mesh was not downloaded with the pose archive.
 
 The compact extraction record is
 [`h2o-oracle-place.json`](experiments/h2o-oracle-place.json), and all 20 rollout records
@@ -125,12 +126,15 @@ MUJOCO_GL=egl PYTHONPATH=src:scripts .venv/bin/python \
 The report rejects a trivial action unless object motion exceeds 3 cm translation or
 15° rotation. It also requires at least eight stable grasp frames.
 
-## Remaining experiments
+## Follow-up status
 
-1. Generate 100 validated demonstrations from the passing oracle trajectory and train
-   the visual policy.
-2. Replace oracle object poses with estimated poses and report Oracle versus Estimated.
-3. Run the same comparison on `pour milk`, including XYZ-only versus full SE(3).
+1. **Complete:** generate 100/100 validated demonstrations.
+2. **Complete:** train the visual pose policy and compare oracle with estimated input.
+3. **Complete:** run `pour milk` with XYZ-only and full SE(3).
+
+The learned pose experiment uses synthetic robosuite RGB views. The gated H2O RGB-D
+archive is not present locally, so this result does not establish pose accuracy on real
+H2O pixels.
 
 The [action-index audit](experiments/h2o-action-index-audit.json) records the public
 sequence selection. H2O's official format is documented by the

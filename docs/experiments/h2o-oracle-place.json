@@ -25,7 +25,8 @@
     "successes": 20,
     "episodes": 20,
     "success_rate": 1.0,
-    "mean_final_target_xy_error_m": 0.02712,
-    "mean_trajectory_scale": 2.2762
+    "mean_final_target_xy_error_m": 0.02471,
+    "mean_trajectory_scale": 2.2762,
+    "orientation_controller": "corrected OSC sign, limited to 0.1 action units"
   }
 }

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "source": "H2O subject1/h1/1 place milk frames 0-48",
+  "environment": "robosuite PickPlace can proxy",
+  "controller": "H2O-derived 12-waypoint SE(3) trajectory with OSC_POSE",
+  "requested_episodes": 100,
+  "successful_episodes": 100,
+  "attempts": 100,
+  "samples": 23972,
+  "pose_training_samples": 1768,
+  "mean_episode_steps": 239.72,
+  "mean_path_scale": 2.244949378735354,
+  "cameras": [
+    "agentview 84x84 RGB",
+    "frontview 84x84 RGB"
+  ],
+  "pose_target": "XYZ plus continuous 6D rotation representation",
+  "elapsed_seconds": 428.2480773999996
+}

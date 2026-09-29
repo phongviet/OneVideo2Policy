@@ -1,0 +1,1003 @@
+{
+  "schema_version": 1,
+  "experiment": "H2O Place oracle versus learned visual 6D pose",
+  "source": "subject1/h1/1 place milk",
+  "policy": "dual-view 2.62M-parameter pose estimator plus H2O SE(3) skill",
+  "pose_metrics": {
+    "translation_error_mean_m": 0.004619559459672061,
+    "translation_error_p90_m": 0.007391170380344907,
+    "rotation_error_mean_deg": 73.22013251410976,
+    "rotation_error_p90_deg": 132.97375503814428
+  },
+  "execution": {
+    "oracle": {
+      "successes": 20,
+      "episodes": 20,
+      "success_rate": 1.0,
+      "mean_final_target_xy_error_m": 0.026471335678065727
+    },
+    "estimated": {
+      "successes": 20,
+      "episodes": 20,
+      "success_rate": 1.0,
+      "mean_final_target_xy_error_m": 0.02650672614482938
+    }
+  },
+  "gate": {
+    "minimum_estimated_successes": 16,
+    "episodes": 20,
+    "pass": true
+  },
+  "episodes_detail": {
+    "oracle": [
+      {
+        "success": true,
+        "steps": 266,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1778521072524128,
+          0.21298740775992125,
+          0.86
+        ],
+        "yaw_rad": -2.2573671416572063,
+        "estimated_position": [
+          0.17850597202777863,
+          0.21155965328216553,
+          0.8599987626075745
+        ],
+        "translation_error_m": 0.001570357769540353,
+        "rotation_error_deg": 117.5165361502212,
+        "final_can_position": [
+          0.21823616932581907,
+          0.40452351668417696,
+          0.8600588358299927
+        ],
+        "final_target_xy_error_m": 0.020834666737919807
+      },
+      {
+        "success": true,
+        "steps": 235,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.15263987561474374,
+          0.19868842621423827,
+          0.86
+        ],
+        "yaw_rad": -0.4206868476774228,
+        "estimated_position": [
+          0.15800732374191284,
+          0.20014724135398865,
+          0.860002338886261
+        ],
+        "translation_error_m": 0.0055621620328973696,
+        "rotation_error_deg": 76.38336965220502,
+        "final_can_position": [
+          0.2175915842045157,
+          0.4059781031339709,
+          0.8600503951996684
+        ],
+        "final_target_xy_error_m": 0.020390413366523055
+      },
+      {
+        "success": true,
+        "steps": 231,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.2320479192178383,
+          0.18925301437488937,
+          0.86
+        ],
+        "yaw_rad": 2.9097124242917607,
+        "estimated_position": [
+          0.2256680130958557,
+          0.18777279555797577,
+          0.8600027561187744
+        ],
+        "translation_error_m": 0.006549370768817918,
+        "rotation_error_deg": 132.86336263376333,
+        "final_can_position": [
+          0.22421612994385526,
+          0.42021653714535356,
+          0.8602297922512656
+        ],
+        "final_target_xy_error_m": 0.03205662626664963
+      },
+      {
+        "success": true,
+        "steps": 248,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.20537243858843846,
+          0.19645204797350022,
+          0.86
+        ],
+        "yaw_rad": -2.8970483717322955,
+        "estimated_position": [
+          0.20435206592082977,
+          0.1952957659959793,
+          0.8600042462348938
+        ],
+        "translation_error_m": 0.0015421304817859255,
+        "rotation_error_deg": 107.18543332830964,
+        "final_can_position": [
+          0.22285442068191508,
+          0.3998628434035714,
+          0.8600532797671597
+        ],
+        "final_target_xy_error_m": 0.02549119932505353
+      },
+      {
+        "success": true,
+        "steps": 249,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.16347770110988297,
+          0.18893974920359308,
+          0.86
+        ],
+        "yaw_rad": -0.711952296780864,
+        "estimated_position": [
+          0.1530781388282776,
+          0.18894122540950775,
+          0.8600017428398132
+        ],
+        "translation_error_m": 0.010399562532417592,
+        "rotation_error_deg": 151.02663950686147,
+        "final_can_position": [
+          0.22263799953493538,
+          0.41347363063407516,
+          0.8600489527487523
+        ],
+        "final_target_xy_error_m": 0.027428809487681435
+      },
+      {
+        "success": true,
+        "steps": 261,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.18172610116957688,
+          0.18755017406152824,
+          0.86
+        ],
+        "yaw_rad": -2.9198039971439513,
+        "estimated_position": [
+          0.17737936973571777,
+          0.18833394348621368,
+          0.8600120544433594
+        ],
+        "translation_error_m": 0.0044168443462244975,
+        "rotation_error_deg": 99.24159758524777,
+        "final_can_position": [
+          0.2268064134102573,
+          0.3978007196375791,
+          0.8600493264460466
+        ],
+        "final_target_xy_error_m": 0.02968078676345261
+      },
+      {
+        "success": true,
+        "steps": 258,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.17590261471034224,
+          0.20160306784177212,
+          0.86
+        ],
+        "yaw_rad": -1.4223851473966374,
+        "estimated_position": [
+          0.17203176021575928,
+          0.20324647426605225,
+          0.8600044250488281
+        ],
+        "translation_error_m": 0.0042052727348717185,
+        "rotation_error_deg": 1.726371083888849,
+        "final_can_position": [
+          0.22140729083247973,
+          0.4008465063254398,
+          0.8600629293687237
+        ],
+        "final_target_xy_error_m": 0.02396440268983518
+      },
+      {
+        "success": true,
+        "steps": 252,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1698121106859174,
+          0.20445733561693927,
+          0.86
+        ],
+        "yaw_rad": -2.6803575498753927,
+        "estimated_position": [
+          0.16172631084918976,
+          0.20687060058116913,
+          0.8600026369094849
+        ],
+        "translation_error_m": 0.00843824707747383,
+        "rotation_error_deg": 44.86222656735174,
+        "final_can_position": [
+          0.22018167213634612,
+          0.40421642211482534,
+          0.8600492400756866
+        ],
+        "final_target_xy_error_m": 0.022746524037244923
+      },
+      {
+        "success": true,
+        "steps": 253,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1724281631829852,
+          0.21334779625003233,
+          0.86
+        ],
+        "yaw_rad": -1.4982668485072195,
+        "estimated_position": [
+          0.17435047030448914,
+          0.21167343854904175,
+          0.8599972128868103
+        ],
+        "translation_error_m": 0.0025492638443776546,
+        "rotation_error_deg": 114.08335622173877,
+        "final_can_position": [
+          0.21905476204326696,
+          0.4107301029271943,
+          0.8600608453026312
+        ],
+        "final_target_xy_error_m": 0.02307254561018514
+      },
+      {
+        "success": true,
+        "steps": 258,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1849087931804945,
+          0.20637631873382611,
+          0.86
+        ],
+        "yaw_rad": -1.384833344431967,
+        "estimated_position": [
+          0.18081316351890564,
+          0.208546981215477,
+          0.8600066304206848
+        ],
+        "translation_error_m": 0.004635299547668052,
+        "rotation_error_deg": 28.411933739689093,
+        "final_can_position": [
+          0.22325678612514155,
+          0.39968205958105385,
+          0.8600596791781427
+        ],
+        "final_target_xy_error_m": 0.02591047702573255
+      },
+      {
+        "success": true,
+        "steps": 244,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.23070526109817355,
+          0.21111743726413792,
+          0.86
+        ],
+        "yaw_rad": -0.8329213073191792,
+        "estimated_position": [
+          0.2395818531513214,
+          0.21196241676807404,
+          0.8599997162818909
+        ],
+        "translation_error_m": 0.008916718954894558,
+        "rotation_error_deg": 19.62823883893152,
+        "final_can_position": [
+          0.225901436009886,
+          0.40611120899535097,
+          0.8600656136586352
+        ],
+        "final_target_xy_error_m": 0.028630096015063444
+      },
+      {
+        "success": true,
+        "steps": 230,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.2019599939400783,
+          0.20517906459734328,
+          0.86
+        ],
+        "yaw_rad": 1.3159271054288846,
+        "estimated_position": [
+          0.19868426024913788,
+          0.2081460952758789,
+          0.8600061535835266
+        ],
+        "translation_error_m": 0.0044196990992514335,
+        "rotation_error_deg": 49.75908735638282,
+        "final_can_position": [
+          0.22800673316749082,
+          0.41970937614182197,
+          0.8608936760772492
+        ],
+        "final_target_xy_error_m": 0.03502603882461153
+      },
+      {
+        "success": true,
+        "steps": 235,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.16438979973797516,
+          0.20393237178529308,
+          0.86
+        ],
+        "yaw_rad": 2.095646071116855,
+        "estimated_position": [
+          0.16210007667541504,
+          0.2057245969772339,
+          0.860008180141449
+        ],
+        "translation_error_m": 0.00290774306921383,
+        "rotation_error_deg": 179.32910458787097,
+        "final_can_position": [
+          0.21847718661227697,
+          0.40879043642882024,
+          0.8600542946915427
+        ],
+        "final_target_xy_error_m": 0.021900044489254356
+      },
+      {
+        "success": true,
+        "steps": 276,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.22435372464669168,
+          0.2025929274862165,
+          0.86
+        ],
+        "yaw_rad": -1.2446041179633849,
+        "estimated_position": [
+          0.23052814602851868,
+          0.20267394185066223,
+          0.8600071668624878
+        ],
+        "translation_error_m": 0.006174957011310031,
+        "rotation_error_deg": 155.72409691090067,
+        "final_can_position": [
+          0.20148689117718988,
+          0.4385957534250666,
+          0.8668373333830014
+        ],
+        "final_target_xy_error_m": 0.03631526836720282
+      },
+      {
+        "success": true,
+        "steps": 244,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.22009842847697259,
+          0.21151984459794,
+          0.86
+        ],
+        "yaw_rad": -1.3965738229033497,
+        "estimated_position": [
+          0.2265651673078537,
+          0.21055659651756287,
+          0.859998881816864
+        ],
+        "translation_error_m": 0.006538085287108862,
+        "rotation_error_deg": 76.7655465406847,
+        "final_can_position": [
+          0.22730656783890588,
+          0.4088375296222394,
+          0.8600537440804207
+        ],
+        "final_target_xy_error_m": 0.03047286937667766
+      },
+      {
+        "success": true,
+        "steps": 250,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1709086409113053,
+          0.20998683756487566,
+          0.86
+        ],
+        "yaw_rad": 0.7397080923938208,
+        "estimated_position": [
+          0.16965989768505096,
+          0.20988230407238007,
+          0.8599955439567566
+        ],
+        "translation_error_m": 0.0012531188102054903,
+        "rotation_error_deg": 58.82321020627032,
+        "final_can_position": [
+          0.2238152930836915,
+          0.4079918834967699,
+          0.8600625327393044
+        ],
+        "final_target_xy_error_m": 0.026882251290073798
+      },
+      {
+        "success": true,
+        "steps": 237,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.16585951400015458,
+          0.1896689637636018,
+          0.86
+        ],
+        "yaw_rad": 1.944286717196551,
+        "estimated_position": [
+          0.15838880836963654,
+          0.19027389585971832,
+          0.8600068688392639
+        ],
+        "translation_error_m": 0.007495160614671233,
+        "rotation_error_deg": 25.02066151180559,
+        "final_can_position": [
+          0.22044871468416918,
+          0.40141030216266943,
+          0.8600483671976924
+        ],
+        "final_target_xy_error_m": 0.02297457174861122
+      },
+      {
+        "success": true,
+        "steps": 239,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.184556957740686,
+          0.19160416994125118,
+          0.86
+        ],
+        "yaw_rad": -0.13532596117642592,
+        "estimated_position": [
+          0.18410609662532806,
+          0.19351713359355927,
+          0.8600009679794312
+        ],
+        "translation_error_m": 0.00196537696571876,
+        "rotation_error_deg": 41.98494847099162,
+        "final_can_position": [
+          0.22410918996683418,
+          0.4013615414303825,
+          0.860057466511965
+        ],
+        "final_target_xy_error_m": 0.02663353297266069
+      },
+      {
+        "success": true,
+        "steps": 232,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.16009108402780314,
+          0.19963939707944142,
+          0.86
+        ],
+        "yaw_rad": -1.1827392234683833,
+        "estimated_position": [
+          0.1589674949645996,
+          0.19769957661628723,
+          0.8600101470947266
+        ],
+        "translation_error_m": 0.0022417535046819316,
+        "rotation_error_deg": 125.18822105652536,
+        "final_can_position": [
+          0.22198910818303902,
+          0.4052109347608705,
+          0.8600641586647629
+        ],
+        "final_target_xy_error_m": 0.024638700998191525
+      },
+      {
+        "success": true,
+        "steps": 253,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.16808186092509947,
+          0.20663042651532937,
+          0.86
+        ],
+        "yaw_rad": -1.8035957532767488,
+        "estimated_position": [
+          0.16341952979564667,
+          0.20792868733406067,
+          0.8600054979324341
+        ],
+        "translation_error_m": 0.0048397151715135625,
+        "rotation_error_deg": 14.443095161310548,
+        "final_can_position": [
+          0.2217842459024063,
+          0.4046232234315452,
+          0.8600550762946022
+        ],
+        "final_target_xy_error_m": 0.024376888168689614
+      }
+    ],
+    "estimated": [
+      {
+        "success": true,
+        "steps": 239,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1778521072524128,
+          0.21298740775992125,
+          0.86
+        ],
+        "yaw_rad": -2.2573671416572063,
+        "estimated_position": [
+          0.17885319888591766,
+          0.21208438277244568,
+          0.8600082993507385
+        ],
+        "translation_error_m": 0.0013482238189193188,
+        "rotation_error_deg": 132.8423704256808,
+        "final_can_position": [
+          0.21828616775613333,
+          0.4110739857729449,
+          0.8600613024606716
+        ],
+        "final_target_xy_error_m": 0.02248506175265653
+      },
+      {
+        "success": true,
+        "steps": 242,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.15263987561474374,
+          0.19868842621423827,
+          0.86
+        ],
+        "yaw_rad": -0.4206868476774228,
+        "estimated_position": [
+          0.1585206389427185,
+          0.2000400274991989,
+          0.8600150346755981
+        ],
+        "translation_error_m": 0.006034105517359677,
+        "rotation_error_deg": 71.59543790674242,
+        "final_can_position": [
+          0.22090593316924717,
+          0.4074387448987574,
+          0.8600535345514914
+        ],
+        "final_target_xy_error_m": 0.023921306584262215
+      },
+      {
+        "success": true,
+        "steps": 244,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.2320479192178383,
+          0.18925301437488937,
+          0.86
+        ],
+        "yaw_rad": 2.9097124242917607,
+        "estimated_position": [
+          0.2269706130027771,
+          0.18752984702587128,
+          0.8600149154663086
+        ],
+        "translation_error_m": 0.005361768979110931,
+        "rotation_error_deg": 134.15621655031563,
+        "final_can_position": [
+          0.1817040549947729,
+          0.4052627111208794,
+          0.8501622328431226
+        ],
+        "final_target_xy_error_m": 0.016035724222672007
+      },
+      {
+        "success": true,
+        "steps": 252,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.20537243858843846,
+          0.19645204797350022,
+          0.86
+        ],
+        "yaw_rad": -2.8970483717322955,
+        "estimated_position": [
+          0.2048363834619522,
+          0.19511164724826813,
+          0.8600159287452698
+        ],
+        "translation_error_m": 0.0014437045846573886,
+        "rotation_error_deg": 95.82589119883019,
+        "final_can_position": [
+          0.22728057497863222,
+          0.4012499992344224,
+          0.8600584886010095
+        ],
+        "final_target_xy_error_m": 0.02980679700960637
+      },
+      {
+        "success": true,
+        "steps": 217,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.16347770110988297,
+          0.18893974920359308,
+          0.86
+        ],
+        "yaw_rad": -0.711952296780864,
+        "estimated_position": [
+          0.15446460247039795,
+          0.18869082629680634,
+          0.8600181937217712
+        ],
+        "translation_error_m": 0.009016553704721207,
+        "rotation_error_deg": 62.72538747658825,
+        "final_can_position": [
+          0.23094492095831834,
+          0.4194484380636377,
+          0.86055720483209
+        ],
+        "final_target_xy_error_m": 0.03749416342185971
+      },
+      {
+        "success": true,
+        "steps": 262,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.18172610116957688,
+          0.18755017406152824,
+          0.86
+        ],
+        "yaw_rad": -2.9198039971439513,
+        "estimated_position": [
+          0.17742790281772614,
+          0.18852531909942627,
+          0.8600110411643982
+        ],
+        "translation_error_m": 0.004407441301265496,
+        "rotation_error_deg": 105.25400341120137,
+        "final_can_position": [
+          0.22716134411287445,
+          0.3969107617766089,
+          0.8600669233491925
+        ],
+        "final_target_xy_error_m": 0.03018335499079199
+      },
+      {
+        "success": true,
+        "steps": 238,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.17590261471034224,
+          0.20160306784177212,
+          0.86
+        ],
+        "yaw_rad": -1.4223851473966374,
+        "estimated_position": [
+          0.17062942683696747,
+          0.20328739285469055,
+          0.8599984645843506
+        ],
+        "translation_error_m": 0.005535653841647855,
+        "rotation_error_deg": 8.141165068577072,
+        "final_can_position": [
+          0.2290341159768289,
+          0.39637275493805985,
+          0.8602011546584607
+        ],
+        "final_target_xy_error_m": 0.032123879007510375
+      },
+      {
+        "success": true,
+        "steps": 240,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.1698121106859174,
+          0.20445733561693927,
+          0.86
+        ],
+        "yaw_rad": -2.6803575498753927,
+        "estimated_position": [
+          0.16348114609718323,
+          0.20670270919799805,
+          0.8600121140480042
+        ],
+        "translation_error_m": 0.006717362718543771,
+        "rotation_error_deg": 54.17764703369262,
+        "final_can_position": [
+          0.22945180894343722,
+          0.3978765248232123,
+          0.8611684717521878
+        ],
+        "final_target_xy_error_m": 0.03228458792470932
+      },
+      {
+        "success": true,
+        "steps": 251,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1724281631829852,
+          0.21334779625003233,
+          0.86
+        ],
+        "yaw_rad": -1.4982668485072195,
+        "estimated_position": [
+          0.17627748847007751,
+          0.2115674912929535,
+          0.8599969148635864
+        ],
+        "translation_error_m": 0.004241084816897026,
+        "rotation_error_deg": 128.3780639857449,
+        "final_can_position": [
+          0.21735127502795973,
+          0.41135969341275436,
+          0.8600591665890289
+        ],
+        "final_target_xy_error_m": 0.021738612826114265
+      },
+      {
+        "success": true,
+        "steps": 239,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1849087931804945,
+          0.20637631873382611,
+          0.86
+        ],
+        "yaw_rad": -1.384833344431967,
+        "estimated_position": [
+          0.18349513411521912,
+          0.2080526351928711,
+          0.8599936366081238
+        ],
+        "translation_error_m": 0.0021928313470161195,
+        "rotation_error_deg": 2.568035430998277,
+        "final_can_position": [
+          0.2248063243742564,
+          0.4007772994121225,
+          0.860049983879878
+        ],
+        "final_target_xy_error_m": 0.02736061125317895
+      },
+      {
+        "success": true,
+        "steps": 208,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.23070526109817355,
+          0.21111743726413792,
+          0.86
+        ],
+        "yaw_rad": -0.8329213073191792,
+        "estimated_position": [
+          0.23884475231170654,
+          0.21088427305221558,
+          0.8599963188171387
+        ],
+        "translation_error_m": 0.008142830976755533,
+        "rotation_error_deg": 8.984707612211308,
+        "final_can_position": [
+          0.1891580456744098,
+          0.3979704390062649,
+          0.8564237489880858
+        ],
+        "final_target_xy_error_m": 0.009492371925193407
+      },
+      {
+        "success": true,
+        "steps": 218,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.2019599939400783,
+          0.20517906459734328,
+          0.86
+        ],
+        "yaw_rad": 1.3159271054288846,
+        "estimated_position": [
+          0.1988195925951004,
+          0.20821237564086914,
+          0.8600005507469177
+        ],
+        "translation_error_m": 0.0043661306436749096,
+        "rotation_error_deg": 42.00594337235415,
+        "final_can_position": [
+          0.22995663473952804,
+          0.40439879965757997,
+          0.8606293934958393
+        ],
+        "final_target_xy_error_m": 0.03251212971730341
+      },
+      {
+        "success": true,
+        "steps": 261,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.16438979973797516,
+          0.20393237178529308,
+          0.86
+        ],
+        "yaw_rad": 2.095646071116855,
+        "estimated_position": [
+          0.162217915058136,
+          0.20559614896774292,
+          0.8600070476531982
+        ],
+        "translation_error_m": 0.0027359252995607206,
+        "rotation_error_deg": 176.55533307618293,
+        "final_can_position": [
+          0.22427129221349826,
+          0.3991454153632052,
+          0.8600526309879889
+        ],
+        "final_target_xy_error_m": 0.0269806472284475
+      },
+      {
+        "success": true,
+        "steps": 263,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.22435372464669168,
+          0.2025929274862165,
+          0.86
+        ],
+        "yaw_rad": -1.2446041179633849,
+        "estimated_position": [
+          0.23161572217941284,
+          0.20266826450824738,
+          0.8599984049797058
+        ],
+        "translation_error_m": 0.007262388475992352,
+        "rotation_error_deg": 113.4299392047934,
+        "final_can_position": [
+          0.21758405689494825,
+          0.3975525425847502,
+          0.8600647267137079
+        ],
+        "final_target_xy_error_m": 0.020684454941700264
+      },
+      {
+        "success": true,
+        "steps": 257,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.22009842847697259,
+          0.21151984459794,
+          0.86
+        ],
+        "yaw_rad": -1.3965738229033497,
+        "estimated_position": [
+          0.22559309005737305,
+          0.21059779822826385,
+          0.8599987030029297
+        ],
+        "translation_error_m": 0.005571487868887739,
+        "rotation_error_deg": 76.21761757523727,
+        "final_can_position": [
+          0.2217968444222228,
+          0.3963878583413237,
+          0.860056761483647
+        ],
+        "final_target_xy_error_m": 0.025053840514648165
+      },
+      {
+        "success": true,
+        "steps": 262,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.1709086409113053,
+          0.20998683756487566,
+          0.86
+        ],
+        "yaw_rad": 0.7397080923938208,
+        "estimated_position": [
+          0.17377793788909912,
+          0.21020275354385376,
+          0.8600104451179504
+        ],
+        "translation_error_m": 0.0028774283583164625,
+        "rotation_error_deg": 35.301445831090426,
+        "final_can_position": [
+          0.21816468726644553,
+          0.4036873097300395,
+          0.8600525272632237
+        ],
+        "final_target_xy_error_m": 0.020698768181103003
+      },
+      {
+        "success": true,
+        "steps": 237,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.16585951400015458,
+          0.1896689637636018,
+          0.86
+        ],
+        "yaw_rad": 1.944286717196551,
+        "estimated_position": [
+          0.15858805179595947,
+          0.19039534032344818,
+          0.8600003123283386
+        ],
+        "translation_error_m": 0.007307652536299281,
+        "rotation_error_deg": 21.54035033989701,
+        "final_can_position": [
+          0.230618470320944,
+          0.4045454015247951,
+          0.8601144610887821
+        ],
+        "final_target_xy_error_m": 0.03318157235269123
+      },
+      {
+        "success": true,
+        "steps": 257,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.184556957740686,
+          0.19160416994125118,
+          0.86
+        ],
+        "yaw_rad": -0.13532596117642592,
+        "estimated_position": [
+          0.18276149034500122,
+          0.1932557225227356,
+          0.8600142002105713
+        ],
+        "translation_error_m": 0.002439575935353359,
+        "rotation_error_deg": 56.88340116939417,
+        "final_can_position": [
+          0.22556535088657306,
+          0.4025951438769268,
+          0.8600710718227262
+        ],
+        "final_target_xy_error_m": 0.02806551215894311
+      },
+      {
+        "success": true,
+        "steps": 233,
+        "terminal_phase": 5,
+        "initial_position": [
+          0.16009108402780314,
+          0.19963939707944142,
+          0.86
+        ],
+        "yaw_rad": -1.1827392234683833,
+        "estimated_position": [
+          0.1581725776195526,
+          0.1978434920310974,
+          0.8600072860717773
+        ],
+        "translation_error_m": 0.0026279259631899446,
+        "rotation_error_deg": 123.52786849411774,
+        "final_can_position": [
+          0.22820933557717496,
+          0.41900125381021874,
+          0.8601279311669171
+        ],
+        "final_target_xy_error_m": 0.03486193725111674
+      },
+      {
+        "success": true,
+        "steps": 236,
+        "terminal_phase": 6,
+        "initial_position": [
+          0.16808186092509947,
+          0.20663042651532937,
+          0.86
+        ],
+        "yaw_rad": -1.8035957532767488,
+        "estimated_position": [
+          0.16548378765583038,
+          0.20756517350673676,
+          0.8599976301193237
+        ],
+        "translation_error_m": 0.0027611125052721293,
+        "rotation_error_deg": 14.291825118545418,
+        "final_can_position": [
+          0.22262828800406378,
+          0.4039343112355347,
+          0.8600570308018021
+        ],
+        "final_target_xy_error_m": 0.025169189632079068
+      }
+    ]
+  },
+  "elapsed_seconds": 105.0934442880025,
+  "limitations": [
+    "the milk container is represented by robosuite's axisymmetric can proxy",
+    "control uses estimated translation and demonstrated relative rotations",
+    "absolute estimated yaw is scored but is not needed for the top grasp"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "trained",
+  "device": "cuda",
+  "parameters": 2610793,
+  "episodes": 100,
+  "train_episodes": 80,
+  "validation_episodes": 20,
+  "train_samples": 1409,
+  "validation_samples": 359,
+  "best_epoch": {
+    "epoch": 57,
+    "train_huber": 0.1615094464758168,
+    "validation_normalized_mae": 0.5050514936447144
+  },
+  "translation_error_mean_m": 0.003542554099112749,
+  "translation_error_p90_m": 0.007881056517362595,
+  "rotation_error_mean_deg": 57.765743255615234,
+  "rotation_error_p90_deg": 146.81761169433594,
+  "elapsed_seconds": 25.81979682399833
+}

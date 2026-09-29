@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "experiment": "H2O oracle pour milk handoff",
+  "sequence": "subject1/h1/1",
+  "action": "pour milk",
+  "frames": 139,
+  "object_id": 5,
+  "object_name": "milk",
+  "selected_hand": "right",
+  "stable_grasp_frames": 139,
+  "grasp_translation_rms_m": 0.005,
+  "grasp_rotation_p90_deg": 6.297,
+  "object_net_translation_m": 0.13113,
+  "object_net_rotation_deg": 29.533,
+  "gates": {
+    "stable_human_grasp": true,
+    "nontrivial_object_motion": true,
+    "robot_trajectory": false
+  },
+  "next_gate": "retarget the saved object-relative SE(3) and object-to-hand transform to a Panda gripper, then require 10/20 successful perturbed MuJoCo rollouts"
+}

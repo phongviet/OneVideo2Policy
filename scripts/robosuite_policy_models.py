@@ -135,6 +135,22 @@ class VisualWaypointPolicy(torch.nn.Module):
         return self.head(self.vision(image))
 
 
+class VisualPosePolicy(torch.nn.Module):
+    """Regress XYZ and a continuous two-column rotation from two RGB views."""
+
+    def __init__(self, image_channels: int = 6) -> None:
+        super().__init__()
+        self.vision = SpatialVisionEncoder(image_channels)
+        self.head = torch.nn.Sequential(
+            torch.nn.Linear(128 * 6 * 6, 512),
+            torch.nn.SiLU(),
+            torch.nn.Linear(512, 9),
+        )
+
+    def forward(self, image: torch.Tensor) -> torch.Tensor:
+        return self.head(self.vision(image))
+
+
 class PhaseImagePolicy(torch.nn.Module):
     def __init__(self, proprio_dim: int, action_dim: int, image_channels: int = 3) -> None:
         super().__init__()
