@@ -48,6 +48,37 @@ It performs the following operations without per-sequence clicks:
 The generic human-hand-to-Panda-gripper mapping remains a single global calibration;
 it is not a new annotation for each demonstration.
 
+## Measured result
+
+Both oracle gates pass on the real H2O annotations:
+
+| Measurement | Result |
+|---|---:|
+| Frames | 49 |
+| Automatically selected hand | right |
+| Stable grasp frames | 34 |
+| Object-frame grasp translation RMS | 5.14 mm |
+| Object-frame grasp rotation p90 | 6.73° |
+| Object motion | 10.57 cm, 7.45° |
+| Perturbed Panda Place rollouts | **20/20 (100%)** |
+| Final target XY error | 2.71 cm mean, 1.44–3.72 cm range |
+| Retarget scale | 2.28× mean, 2.15–2.36× range |
+
+The controller downsamples the 34-frame stable interval to 12 SE(3) waypoints, applies
+one minimum 3D rotation and uniform scale to match each simulator start and goal, and
+uses the H2O relative rotations for gripper orientation. The simulator randomizes the
+can 19–22 cm from the target. This clearance keeps the can outside the bin collision
+wall; the initial 13.5–15.5 cm setup overlapped the wall and invalidated the grasp point.
+
+This result validates oracle grasp extraction and trajectory retargeting. It does not
+measure visual pose estimation or a learned policy. The simulator also uses a can as a
+milk-container proxy because the H2O object mesh is not included in the pose archive.
+
+The compact extraction record is
+[`h2o-oracle-place.json`](experiments/h2o-oracle-place.json), and all 20 rollout records
+are in
+[`h2o-oracle-place-retarget.json`](experiments/h2o-oracle-place-retarget.json).
+
 ## Data access
 
 H2O requires accepting its academic, non-commercial terms. The official server returns
@@ -82,19 +113,24 @@ PYTHONPATH=src .venv/bin/python scripts/evaluate_h2o_oracle_place.py \
   --sequence subject1/h1/1 \
   --action-id 13 \
   --output results/h2o_oracle_place
+
+MUJOCO_GL=egl PYTHONPATH=src:scripts .venv/bin/python \
+  scripts/evaluate_h2o_oracle_retarget.py \
+  --trajectory results/h2o_oracle_place/oracle-place-trajectory.npz \
+  --oracle-report results/h2o_oracle_place/report.json \
+  --episodes 20 \
+  --output docs/experiments/h2o-oracle-place-retarget.json
 ```
 
 The report rejects a trivial action unless object motion exceeds 3 cm translation or
 15° rotation. It also requires at least eight stable grasp frames.
 
-## Remaining gates
+## Remaining experiments
 
-1. Run the oracle extractor on the real 49-frame interval.
-2. Map the object-relative trajectory to a Panda gripper and require at least 10/20
-   successful perturbed MuJoCo Place rollouts.
-3. Generate 100 validated demonstrations and train the policy.
-4. Replace oracle object poses with estimated poses and report Oracle versus Estimated.
-5. Run the same comparison on `pour milk`, including XYZ-only versus full SE(3).
+1. Generate 100 validated demonstrations from the passing oracle trajectory and train
+   the visual policy.
+2. Replace oracle object poses with estimated poses and report Oracle versus Estimated.
+3. Run the same comparison on `pour milk`, including XYZ-only versus full SE(3).
 
 The [action-index audit](experiments/h2o-action-index-audit.json) records the public
 sequence selection. H2O's official format is documented by the

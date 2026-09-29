@@ -1,0 +1,560 @@
+{
+  "schema_version": 1,
+  "experiment": "H2O oracle Place to Panda retargeting",
+  "source_sequence": "subject1/h1/1",
+  "source_action": "place milk",
+  "source_object": "milk",
+  "source_grasp": {
+    "hand": "right",
+    "stable_frames": 34,
+    "translation_rms_m": 0.00514,
+    "rotation_p90_deg": 6.727
+  },
+  "simulator": "robosuite PickPlace can proxy",
+  "robot": "Panda",
+  "controller": "OSC_POSE",
+  "episodes": 20,
+  "successes": 20,
+  "success_rate": 1.0,
+  "gate": {
+    "required_successes": 10,
+    "required_episodes": 20,
+    "pass": true
+  },
+  "trajectory": {
+    "stable_h2o_frames": 34,
+    "retargeted_waypoints": 12,
+    "maximum_control_steps_per_waypoint": 20,
+    "full_se3_commands": true,
+    "endpoint_alignment": "uniform scale plus minimum 3D rotation",
+    "simulator_start_distance_m": "uniform [0.19, 0.22] from target"
+  },
+  "episodes_detail": [
+    {
+      "success": true,
+      "steps": 266,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.3137541507055963,
+      "maximum_commanded_path_error_m": 0.11850091059666491,
+      "initial_can_position": [
+        0.16381954226100215,
+        0.19110028301006307,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22931361226379696,
+        0.40003019346923663,
+        0.863683632121135
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.031909338281616136,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 268,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.2667334433846915,
+      "maximum_commanded_path_error_m": 0.12179800955330518,
+      "initial_can_position": [
+        0.1807525451643362,
+        0.19792725409056666,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.23373906642794254,
+        0.405152816865883,
+        0.860779668276885
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.036336034083162466,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 228,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.296366602063387,
+      "maximum_commanded_path_error_m": 0.07395261595727554,
+      "initial_can_position": [
+        0.1992452502500505,
+        0.19141664602844882,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22137827034980018,
+        0.40455117291282205,
+        0.865036348829056
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.023966207568500292,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 372,
+      "final_phase": 6,
+      "completed_waypoints": 12,
+      "path_scale": 2.2262476933981024,
+      "maximum_commanded_path_error_m": 0.07180693747651748,
+      "initial_can_position": [
+        0.21441719722496919,
+        0.2016089867835099,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.20984738274050857,
+        0.3843889210899428,
+        0.8600569559454996
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.021919604007073837,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 230,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.3015544989401184,
+      "maximum_commanded_path_error_m": 0.07408108021733739,
+      "initial_can_position": [
+        0.181199003772006,
+        0.19073172093903212,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22181237499792492,
+        0.4067942286981906,
+        0.8649787120999246
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.02468870142701085,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 269,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.3579493364264494,
+      "maximum_commanded_path_error_m": 0.12933023916846761,
+      "initial_can_position": [
+        0.19058098733067969,
+        0.18360968137891084,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22993892986895165,
+        0.40539825206960145,
+        0.8610945352505313
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.032568144498907395,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 369,
+      "final_phase": 6,
+      "completed_waypoints": 12,
+      "path_scale": 2.1465288673115683,
+      "maximum_commanded_path_error_m": 0.06919778022655634,
+      "initial_can_position": [
+        0.18694965930461627,
+        0.20996939523828462,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.21107315741191404,
+        0.38980262225432455,
+        0.8600549425996891
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.01858639297295125,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 243,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.1750944184350427,
+      "maximum_commanded_path_error_m": 0.07013917491089901,
+      "initial_can_position": [
+        0.18968228882377905,
+        0.20745778285200725,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.19618793597193368,
+        0.3881310729278601,
+        0.8521349730616272
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.014428706706362203,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 266,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.270769947202288,
+      "maximum_commanded_path_error_m": 0.12145158933378838,
+      "initial_can_position": [
+        0.18819301257446652,
+        0.19423234693836863,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22255707641165384,
+        0.40657070271478774,
+        0.8643856919558096
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.025385580530916343,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 365,
+      "final_phase": 6,
+      "completed_waypoints": 12,
+      "path_scale": 2.19927066783849,
+      "maximum_commanded_path_error_m": 0.07090570800971908,
+      "initial_can_position": [
+        0.22487200396416493,
+        0.20594106295042497,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.21340609781343686,
+        0.3842712063231171,
+        0.8600547636093168
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.024192826758462658,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 266,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.350764642736587,
+      "maximum_commanded_path_error_m": 0.12624359159662818,
+      "initial_can_position": [
+        0.1801469589906431,
+        0.18468830527444233,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.2210062786838001,
+        0.40311954265107597,
+        0.8651653825230683
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.02351444174665809,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 232,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.358359952101208,
+      "maximum_commanded_path_error_m": 0.07584905219464766,
+      "initial_can_position": [
+        0.1576082315018258,
+        0.18655452101727174,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.2199037569580919,
+        0.4061494829976312,
+        0.8647887848912349
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.022699053988817452,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 266,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.334055979237516,
+      "maximum_commanded_path_error_m": 0.11557148212655233,
+      "initial_can_position": [
+        0.15422710350910737,
+        0.19012954449917277,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22822100312951613,
+        0.39990717280698296,
+        0.8640113973204021
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.03083022520411727,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 267,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.3207985012571397,
+      "maximum_commanded_path_error_m": 0.12459502543228973,
+      "initial_can_position": [
+        0.17955146467242383,
+        0.1888387040080871,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.23210795482320049,
+        0.40466258030556623,
+        0.861425322161206
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.0346754566029448,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 237,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.156856805692434,
+      "maximum_commanded_path_error_m": 0.06958014976096809,
+      "initial_can_position": [
+        0.1932815051405627,
+        0.20867111780511663,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22083483756848749,
+        0.40963505575890163,
+        0.8642402041714732
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.02440130457640184,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 373,
+      "final_phase": 6,
+      "completed_waypoints": 12,
+      "path_scale": 2.36141983703449,
+      "maximum_commanded_path_error_m": 0.07604696354369751,
+      "initial_can_position": [
+        0.23218794918260022,
+        0.18678557821861205,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.20771485800706493,
+        0.3797491912085788,
+        0.8616513775849032
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.024938777531553293,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 264,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.231662333921304,
+      "maximum_commanded_path_error_m": 0.11599670077440323,
+      "initial_can_position": [
+        0.16363553009248305,
+        0.20150954998005818,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.224101450020043,
+        0.40199949058252615,
+        0.8657200148604274
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.02660615817523878,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 284,
+      "final_phase": 6,
+      "completed_waypoints": 12,
+      "path_scale": 2.2323886801177446,
+      "maximum_commanded_path_error_m": 0.12395993552575729,
+      "initial_can_position": [
+        0.17709463241428142,
+        0.20221827482558227,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.2295797231384532,
+        0.40348145699024857,
+        0.8600520530822483
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.03209473312653522,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 270,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.2634259528676988,
+      "maximum_commanded_path_error_m": 0.11834823001915697,
+      "initial_can_position": [
+        0.15971694217905472,
+        0.20026382281893768,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.22896344823145198,
+        0.4030815867270716,
+        0.8630855567783603
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.03146882294802848,
+      "final_in_bin": true,
+      "final_grasped": false
+    },
+    {
+      "success": true,
+      "steps": 266,
+      "final_phase": 5,
+      "completed_waypoints": 12,
+      "path_scale": 2.3598033542562162,
+      "maximum_commanded_path_error_m": 0.11888924701258433,
+      "initial_can_position": [
+        0.15555171541663876,
+        0.18684307985761064,
+        0.8600000000000001
+      ],
+      "final_can_position": [
+        0.23454854847160375,
+        0.3986443799746724,
+        0.8617016229449623
+      ],
+      "target_position": [
+        0.1975,
+        0.4025,
+        0.8
+      ],
+      "final_target_xy_error_m": 0.037248634198215634,
+      "final_in_bin": true,
+      "final_grasped": false
+    }
+  ],
+  "elapsed_seconds": 55.70224501300254,
+  "limitations": [
+    "uses robosuite's can proxy because the H2O object mesh was not downloaded",
+    "endpoint alignment adapts one human trajectory to randomized simulator layouts",
+    "this evaluates oracle retargeting, not a learned visual policy"
+  ]
+}

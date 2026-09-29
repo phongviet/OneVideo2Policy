@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "experiment": "H2O oracle Place handoff",
+  "sequence": "subject1/h1/1",
+  "action": "place milk",
+  "frames": 49,
+  "object_id": 5,
+  "object_name": "milk",
+  "selected_hand": "right",
+  "stable_grasp_frames": 34,
+  "grasp_translation_rms_m": 0.00514,
+  "grasp_rotation_p90_deg": 6.727,
+  "object_net_translation_m": 0.10574,
+  "object_net_rotation_deg": 7.451,
+  "gates": {
+    "stable_human_grasp": true,
+    "nontrivial_object_motion": true,
+    "robot_trajectory": true
+  },
+  "next_gate": "generate validated demonstrations, train a policy, and compare oracle versus estimated object poses",
+  "robot_retargeting": {
+    "simulator": "robosuite PickPlace can proxy",
+    "robot": "Panda",
+    "controller": "OSC_POSE",
+    "successes": 20,
+    "episodes": 20,
+    "success_rate": 1.0,
+    "mean_final_target_xy_error_m": 0.02712,
+    "mean_trajectory_scale": 2.2762
+  }
+}

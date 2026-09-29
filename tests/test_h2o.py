@@ -5,10 +5,12 @@ from pathlib import Path
 import numpy as np
 
 from onevideo2policy.video.h2o import (
+    align_vectors,
     estimate_human_grasp,
     load_oracle_trajectory,
     read_action_index,
     relative_object_motion,
+    retarget_object_path,
 )
 
 
@@ -75,3 +77,34 @@ def test_action_index_rejects_malformed_row(tmp_path: Path) -> None:
         assert "Malformed H2O action row" in str(error)
     else:
         raise AssertionError("Malformed action row should fail")
+
+
+def test_retarget_object_path_preserves_inputs_and_hits_endpoint() -> None:
+    motion = np.repeat(np.eye(4)[None], 5, axis=0)
+    motion[:, 0, 3] = np.linspace(0, 0.1, 5)
+    stable = np.ones(5, dtype=bool)
+    source_displacement = motion[-1, :3, 3].copy()
+    target_displacement = np.array([0.0, 0.2, -0.1])
+    start = np.array([0.3, -0.2, 1.0])
+    end = start + target_displacement
+
+    positions, orientations, scale = retarget_object_path(
+        motion, stable, start, end, np.eye(3), waypoint_count=5
+    )
+
+    assert np.allclose(motion[-1, :3, 3], source_displacement)
+    assert np.allclose(positions[0], start)
+    assert np.allclose(positions[-1], end)
+    assert np.isclose(scale, np.linalg.norm(target_displacement) / 0.1)
+    assert np.allclose(np.linalg.det(orientations), 1.0)
+
+
+def test_align_vectors_handles_opposite_direction_without_mutation() -> None:
+    source = np.array([1.0, 0.0, 0.0])
+    target = np.array([-2.0, 0.0, 0.0])
+    rotation = align_vectors(source, target)
+
+    assert np.allclose(source, [1, 0, 0])
+    assert np.allclose(target, [-2, 0, 0])
+    assert np.allclose(rotation @ source, [-1, 0, 0])
+    assert np.isclose(np.linalg.det(rotation), 1.0)

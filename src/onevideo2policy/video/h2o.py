@@ -307,3 +307,59 @@ def estimate_human_grasp(
 def relative_object_motion(trajectory: H2OOracleTrajectory) -> FloatArray:
     """Express the object trajectory relative to its first action frame."""
     return np.linalg.inv(trajectory.object_to_world[0]) @ trajectory.object_to_world
+
+
+def align_vectors(source: FloatArray, target: FloatArray) -> FloatArray:
+    """Return the minimum rotation taking one nonzero 3D vector onto another."""
+    source = np.array(source, dtype=float, copy=True)
+    target = np.array(target, dtype=float, copy=True)
+    source /= np.linalg.norm(source)
+    target /= np.linalg.norm(target)
+    cross = np.cross(source, target)
+    cosine = float(np.clip(source @ target, -1, 1))
+    sine = float(np.linalg.norm(cross))
+    if sine < 1e-9:
+        if cosine > 0:
+            return np.eye(3)
+        axis = np.array([1.0, 0.0, 0.0])
+        if abs(source @ axis) > 0.9:
+            axis = np.array([0.0, 1.0, 0.0])
+        axis -= (axis @ source) * source
+        axis /= np.linalg.norm(axis)
+        return 2 * np.outer(axis, axis) - np.eye(3)
+    axis = cross / sine
+    skew = np.array(
+        [[0, -axis[2], axis[1]], [axis[2], 0, -axis[0]], [-axis[1], axis[0], 0]]
+    )
+    return np.eye(3) + sine * skew + (1 - cosine) * (skew @ skew)
+
+
+def retarget_object_path(
+    motion: FloatArray,
+    stable_mask: NDArray[np.bool_],
+    start_position: FloatArray,
+    end_position: FloatArray,
+    start_orientation: FloatArray,
+    waypoint_count: int = 12,
+) -> tuple[FloatArray, FloatArray, float]:
+    """Align and uniformly scale a stable H2O path to a robot start and goal."""
+    stable_ids = np.flatnonzero(stable_mask)
+    if len(stable_ids) < 2:
+        raise ValueError("H2O retargeting needs at least two stable grasp frames")
+    selected = motion[stable_ids[0] : stable_ids[-1] + 1]
+    selected = selected[
+        np.unique(np.linspace(0, len(selected) - 1, waypoint_count).round().astype(int))
+    ]
+    human_xyz = selected[:, :3, 3] - selected[0, :3, 3]
+    human_displacement = human_xyz[-1]
+    robot_displacement = end_position - start_position
+    alignment = align_vectors(human_displacement, robot_displacement)
+    scale = float(np.linalg.norm(robot_displacement) / np.linalg.norm(human_displacement))
+    positions = start_position + (scale * (alignment @ human_xyz.T)).T
+    first_rotation = selected[0, :3, :3]
+    orientations = []
+    for pose in selected:
+        relative_rotation = first_rotation.T @ pose[:3, :3]
+        simulator_delta = alignment @ relative_rotation @ alignment.T
+        orientations.append(simulator_delta @ start_orientation)
+    return positions, np.stack(orientations), scale

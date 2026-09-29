@@ -35,6 +35,9 @@ Completed evidence:
     to STL float precision and include reproducible hash and manifold audits.
 16. A print-ready ChArUco target and automatic detector produce native intrinsics,
     distortion, robot-frame correspondences, and held-out camera calibration inputs.
+17. The real H2O `place milk` interval yields 34 automatically selected stable grasp
+    frames with 5.14 mm translation RMS and 6.73° rotation p90. Its retargeted SE(3)
+    trajectory passes 20/20 perturbed Panda Place rollouts.
 
 ## Evaluation gates
 
@@ -100,17 +103,18 @@ The learned policy is evaluated in simulation under controlled camera, lighting,
 Gaussian-background, and combined shifts. Its selected checkpoint is strong, but the
 combined-shift result is seed-sensitive. No physical-policy or sim-to-real claim is made.
 
-## Next research milestone — H2O oracle Place
+## Current research milestone — H2O policy comparison
 
-The four-action HOI4D expansion is complete as a boundary study. The next experiment
-uses one public H2O `place milk` interval to isolate downstream transfer from perception:
+The four-action HOI4D expansion is complete as a boundary study. The H2O oracle transfer
+now passes, isolating downstream transfer from perception:
 
-1. Load provided object SE(3), camera pose, and two-hand pose annotations.
-2. Infer the object-frame grasp automatically from stable hand-object coupling.
-3. Retarget the relative SE(3) motion to a Panda in MuJoCo.
-4. Require at least 10/20 successful perturbed Place rollouts before generating 100
-   demonstrations or training another policy.
-5. Compare oracle and estimated object poses only after the oracle path passes.
+1. **Complete:** load provided object SE(3), camera pose, and two-hand annotations.
+2. **Complete:** infer the object-frame grasp from stable hand-object coupling.
+3. **Complete:** retarget the relative SE(3) motion to a Panda in MuJoCo.
+4. **Complete:** pass the 10/20 gate with 20/20 perturbed Place rollouts.
+5. Generate 100 validated demonstrations and train the visual policy.
+6. Compare oracle and estimated object poses, then repeat on `pour milk` with an
+   XYZ-only versus full-SE(3) ablation.
 
-See [`h2o-oracle-place.md`](h2o-oracle-place.md). The official pose archive is gated by
-the H2O academic-use registration and is the only external input still required.
+See [`h2o-oracle-place.md`](h2o-oracle-place.md) and the
+[`20-rollout record`](experiments/h2o-oracle-place-retarget.json).
